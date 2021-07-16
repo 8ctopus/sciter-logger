@@ -1,0 +1,42 @@
+<html
+    window-resizable="true"
+    window-width="500dip"
+    window-height="300dip"
+>
+<head>
+<title>sciter logger demo</title>
+<style>
+
+plaintext#logger {
+    size: *;
+}
+
+</style>
+<script src="js/utils.js" />
+<script src="js/logger.js" />
+<script type="module">
+
+import {logger} from "src/logger.js";
+import * as sys from "@sys";
+
+document.on("ready", function() {
+    try {
+        // initialize logger
+        logger.init("test.log");
+
+        // log
+        logger.log("new logger test");
+        logger.warn("warning");
+        logger.error("error");
+    }
+    catch (e) {
+        console.log(`${e.message} ${e.stack}`);
+    }
+});
+
+</script>
+</head>
+<body>
+    <plaintext #logger readonly />
+</body>
+</html>
