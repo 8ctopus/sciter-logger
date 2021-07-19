@@ -21,7 +21,7 @@ import {logger} from "src/logger.js";
 document.on("ready", function() {
     try {
         // initialize logger
-        logger.init("test.log");
+        logger.init(__DIR__ + "test.log");
 
         // test logger
         logger.log("new logger test");

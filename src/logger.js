@@ -16,6 +16,8 @@ export class logger
 
     static init(file)
     {
+        console.log(file);
+
         this.#file  = file;
 
         // save original console methods
@@ -59,16 +61,19 @@ export class logger
             // open file
             // https://nodejs.org/api/fs.html#fs_file_system_flags
             sys.fs.open(this.#file, "a+", 0o666)
-                .then(function(file) {
+                .then(function success(file) {
                     // write message
                     const buffer = encode(message + "\r\n", "utf-8");
                     file.write(buffer);
                     file.close();
+                },
+                function fail(file) {
+                    console.error(`open file - FAILED - ${file}`);
                 });
         }
         catch (e) {
             // send message to original console method
-            this.#error.apply(console, arguments);
+            console.error("write file - FAILED");
         }
     }
 }
