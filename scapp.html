@@ -17,14 +17,13 @@ plaintext#logger {
 <script type="module">
 
 import {logger} from "src/logger.js";
-import * as sys from "@sys";
 
 document.on("ready", function() {
     try {
         // initialize logger
         logger.init("test.log");
 
-        // log
+        // test logger
         logger.log("new logger test");
         logger.warn("warning");
         logger.error("error");
