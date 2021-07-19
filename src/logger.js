@@ -37,7 +37,7 @@ export class logger
         // send message to original console method
         this.#warn.apply(console, arguments);
 
-        this.#write(`${message}`);
+        this.#write(`WARN - ${message}`);
     }
 
     static error(message)
@@ -45,12 +45,17 @@ export class logger
         // send message to original console method
         this.#error.apply(console, arguments);
 
-        this.#write(`${message}`);
+        this.#write(`ERROR - ${message}`);
     }
 
     static #write(message)
     {
         try {
+            // add time
+            const [hh, mm, ss] = new Date().toLocaleTimeString("en-US").split(/:| /)
+
+            message = `${hh}:${mm}:${ss} ${message}`;
+
             // open file
             // https://nodejs.org/api/fs.html#fs_file_system_flags
             sys.fs.open(this.#file, "a+", 0o666)
