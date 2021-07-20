@@ -6,25 +6,10 @@
 // get logger from parent window
 const logger = Window.this.parent.document.globalThis.logger;
 
-/*
-// get file url
-const url = __DIR__ + "test.log";
+logger.log("logging from new window");
 
-// get file path
-const path = URL.toPath(url);
-
-//console.log(`url - ${url}\npath - ${path}`);
-
-logger.init(path);
-
-logger.log("log from new window");
-console.log("log from new window 2");
-*/
-
-console.log(console.log);
-
-document.on("change", "button", function() {
-    console.log("button click");
+document.on("click", "button", function() {
+    logger.log("new window button clicked");
 });
 
 </script>

@@ -22,14 +22,15 @@ import {logger} from "src/logger.js";
 const url = __DIR__ + "test.log";
 
 // get file path
-const path = URL.toPath(url);
+const file = URL.toPath(url);
 
-//console.log(`url - ${url}\npath - ${path}`);
+//console.log(`url - ${url}\nfile - ${file}`);
 
 // initialize logger
-logger.init(path);
+logger.init(file, true);
 
-//globalThis.logger = logger;
+// export logger for second window to see it
+globalThis.logger = logger;
 
 document.on("ready", function() {
     try {
@@ -44,7 +45,7 @@ document.on("ready", function() {
 });
 
 document.on("click", "button", function() {
-    logger.log("new window");
+    logger.log("create new window");
 
     var wnd = new Window({
         parent : Window.this,
