@@ -21,8 +21,6 @@ export class logger
      */
     static init(file)
     {
-        console.log(file);
-
         this.#file  = file;
 
         // save original console methods
