@@ -18,19 +18,21 @@ plaintext#logger {
 
 import {logger} from "src/logger.js";
 
+// get file url
+const url = __DIR__ + "test.log";
+
+// get file path
+const path = URL.toPath(url);
+
+//console.log(`url - ${url}\npath - ${path}`);
+
+// initialize logger
+logger.init(path);
+
+//globalThis.logger = logger;
+
 document.on("ready", function() {
     try {
-        // get file url
-        const url = __DIR__ + "test.log";
-
-        // get file path
-        const path = URL.toPath(url);
-
-        console.log(`url - ${url}\npath - ${path}`);
-
-        // initialize logger
-        logger.init(path);
-
         // test logger
         logger.log("new logger test");
         logger.warn("warning");
@@ -41,9 +43,20 @@ document.on("ready", function() {
     }
 });
 
+document.on("click", "button", function() {
+    logger.log("new window");
+
+    var wnd = new Window({
+        parent : Window.this,
+        url    : __DIR__ + "window.html",
+        state  : Window.WINDOW_SHOWN
+    });
+});
+
 </script>
 </head>
 <body>
+    <button />
     <plaintext #logger readonly />
 </body>
 </html>
