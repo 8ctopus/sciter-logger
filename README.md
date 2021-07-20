@@ -20,7 +20,7 @@ This is a [sciter.js](https://sciter.com/) primitive logger that saves console l
 import {logger} from "src/logger.js";
 
 // initialize logger
-logger.init(URL.toPath(__DIR__ + "test.log"));
+logger.init(URL.toPath(__DIR__ + "test.log", true));
 
 // log
 logger.log("new logger test");
