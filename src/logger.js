@@ -14,6 +14,11 @@ export class logger
     static #warn;
     static #error;
 
+    /**
+     * Initialize logger
+     * @param string file path
+     * @note use URL.toPath()
+     */
     static init(file)
     {
         console.log(file);
@@ -61,15 +66,16 @@ export class logger
             // open file
             // https://nodejs.org/api/fs.html#fs_file_system_flags
             sys.fs.open(this.#file, "a+", 0o666)
-                .then(function success(file) {
-                    // write message
-                    const buffer = encode(message + "\r\n", "utf-8");
-                    file.write(buffer);
-                    file.close();
-                },
-                function fail(file) {
-                    console.error(`open file - FAILED - ${file}`);
-                });
+                .then(
+                    function(file) {
+                        // write message to file
+                        const buffer = encode(message + "\r\n", "utf-8");
+                        file.write(buffer);
+                        file.close();
+                    },
+                    function(error) {
+                        console.error(`open file - FAILED - ${error}`);
+                    });
         }
         catch (e) {
             // send message to original console method
