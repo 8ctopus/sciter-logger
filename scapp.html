@@ -20,8 +20,16 @@ import {logger} from "src/logger.js";
 
 document.on("ready", function() {
     try {
+        // get file url
+        const url = __DIR__ + "test.log";
+
+        // get file path
+        const path = URL.toPath(url);
+
+        console.log(`url - ${url}\npath - ${path}`);
+
         // initialize logger
-        logger.init(__DIR__ + "test.log");
+        logger.init(path);
 
         // test logger
         logger.log("new logger test");
