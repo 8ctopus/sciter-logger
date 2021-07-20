@@ -9,50 +9,50 @@ import {encode,decode} from "@sciter";
 export class logger
 {
     static #file;
-
-    static #log;
-    static #warn;
-    static #error;
+    static #console;
 
     /**
      * Initialize logger
-     * @param string file path
+     * @param string file - log file path
+     * @param bool console - also log to console
+     * @return void
      * @note use URL.toPath()
      */
-    static init(file)
+    static init(file, console)
     {
-        this.#file  = file;
-
-        // save original console methods
-        this.#log   = console.log;
-        this.#warn  = console.warn;
-        this.#error = console.error;
+        this.#file    = file;
+        this.#console = console;
     }
 
     static log(message)
     {
-        // send message to original console method
-        this.#log.apply(console, arguments);
+        if (this.#console)
+            console.log(message);
 
         this.#write(`${message}`);
     }
 
     static warn(message)
     {
-        // send message to original console method
-        this.#warn.apply(console, arguments);
+        if (this.#console)
+            console.warn(message);
 
         this.#write(`WARN - ${message}`);
     }
 
     static error(message)
     {
-        // send message to original console method
-        this.#error.apply(console, arguments);
+        if (this.#console)
+            console.error(message);
 
         this.#write(`ERROR - ${message}`);
     }
 
+    /**
+     * Write message to file
+     * @param string message
+     * @return void
+     */
     static #write(message)
     {
         try {
