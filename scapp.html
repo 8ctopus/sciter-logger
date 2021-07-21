@@ -31,24 +31,26 @@ document.on("ready", function() {
         // initialize logger
         logger.init(file, true);
 
-        // attach logger to console
-        logger.attach();
-
-        // capture unhandled exceptions
-        logger.capture();
-
-        // export logger for second window to see it
-        globalThis.logger = logger;
-
         const plaintext = document.$("plaintext#logger");
+
+        // fixes a strange bug with the plaintext
+        plaintext.plaintext.appendLine("");
 
         // subscribe to logger messages
         logger.subscribe(function(message) {
             plaintext.plaintext.appendLine(message);
         });
 
-        // fixes a strange bug with the plaintext
-        plaintext.plaintext.appendLine("");
+        // attach logger to console
+        logger.attach();
+
+        // capture unhandled exceptions
+        logger.capture();
+
+        logger.debug();
+
+        // export logger for second window to see it
+        globalThis.logger = logger;
 
         // test logger
         console.log("new logger test");

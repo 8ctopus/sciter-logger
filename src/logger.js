@@ -13,7 +13,6 @@ export class logger
     static #_clear;
 
     static #_original = "";
-    static #_debug    = false;
     static #_callback = null;
 
     /**
@@ -40,10 +39,6 @@ export class logger
     {
         // save original console.log function code
         this.#_original = this.#_original || console.log;
-
-        // check if sciter is running with --debug flag
-        if (this.#_original === "(...args) => log(3,0,args)")
-            this.#_debug = true;
 
         // create proxy around console object
         console = new Proxy(console, {
@@ -78,10 +73,14 @@ export class logger
         }
 
         console.log("Logger started and attached to console");
+    }
 
+    static debug()
+    {
         console.log(`original console.log - ${this.#_original}`);
 
-        if (this.#_debug)
+        // check if sciter is running with --debug flag
+        if (this.#_original == "(...args) => log(3,0,args)")
             console.warn("sciter running with --debug flag");
         else
             console.log("sciter running without --debug flag");
