@@ -54,24 +54,7 @@ document.on("ready", function() {
 
         // subscribe to logger messages
         logger.subscribe(function(level, message) {
-            let jsx = "";
-
-            switch (level) {
-                default:
-                case "log":
-                    jsx = <log>{message}</log>;
-                    break;
-
-                case "warn":
-                    jsx = <warn>{message}</warn>;
-                    break;
-
-                case "error":
-                    jsx = <error>{message}</error>;
-                    break;
-            }
-
-            plaintext.append(jsx);
+            plaintext.append(JSX(level, {}, [message]));
         });
 
         // attach logger to console
