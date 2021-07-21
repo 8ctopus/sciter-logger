@@ -55,7 +55,7 @@ export class logger
                             logger.message(methodName, args);
 
                             // send message to subscribers
-                            logger.send(args);
+                            logger.send(methodName, args);
                             break;
                     }
 
@@ -97,27 +97,27 @@ export class logger
 
     /**
      * Subscribe to new messages
-     * @param function func
+     * @param function callback
      * @return void
      */
-    static subscribe(func)
+    static subscribe(callback)
     {
-        this.#_callback = func;
+        this.#_callback = callback;
     }
 
     /**
      * Send to subscribers
+     * @param string level
      * @param string message
      * @return void
      */
-    static send(message)
+    static send(level, message)
     {
         if (!this.#_callback)
             return;
 
-        //this.message("log", `callback called - message - ${message}`);
         // call callback
-        this.#_callback(message);
+        this.#_callback(level, message);
     }
 
     static message(method, message)
@@ -130,6 +130,8 @@ export class logger
             case "error":
                 message = `ERROR: ${message}`;
                 break;
+
+            default:
         }
 
         // add time

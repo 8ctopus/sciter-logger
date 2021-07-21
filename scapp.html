@@ -11,6 +11,25 @@ plaintext#logger {
     size: *;
 }
 
+log {
+    width: *;
+    padding-left: 4dip;
+    color: rgb(40,40,40);
+}
+
+warn {
+    width: *;
+    padding-left: 4dip;
+    color: orange;
+}
+
+error {
+    width: *;
+    padding-left: 4dip;
+    color: red;
+    //font-weight: bold;
+}
+
 </style>
 <script src="js/utils.js" />
 <!--script src="js/logger.js" /-->
@@ -33,12 +52,26 @@ document.on("ready", function() {
 
         const plaintext = document.$("plaintext#logger");
 
-        // fixes a strange bug with the plaintext
-        plaintext.plaintext.appendLine("");
-
         // subscribe to logger messages
-        logger.subscribe(function(message) {
-            plaintext.plaintext.appendLine(message);
+        logger.subscribe(function(level, message) {
+            let jsx = "";
+
+            switch (level) {
+                default:
+                case "log":
+                    jsx = <log>{message}</log>;
+                    break;
+
+                case "warn":
+                    jsx = <warn>{message}</warn>;
+                    break;
+
+                case "error":
+                    jsx = <error>{message}</error>;
+                    break;
+            }
+
+            plaintext.append(jsx);
         });
 
         // attach logger to console
