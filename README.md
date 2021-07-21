@@ -1,6 +1,6 @@
 # sciter logger
 
-This is a [sciter.js](https://sciter.com/) primitive logger that saves console logs to a file.
+This is a [sciter.js](https://sciter.com/) logger that listens to the console output and redirects it to a file.
 
 ## demo
 
@@ -22,6 +22,19 @@ import {logger} from "src/logger.js";
 // initialize logger
 logger.init(URL.toPath(__DIR__ + "test.log", true));
 
+// attach logger to console
+logger.attach();
+
+// capture unhandled exceptions
+logger.capture();
+
 // log
-logger.log("new logger test");
+console.log("new logger test");
+```
+
+- as each window has its own console, you'll need to import the console object from the parent window:
+
+```js
+// get console from parent window
+console = Window.this.parent.document.globalThis.console;
 ```
