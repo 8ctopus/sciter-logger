@@ -13,31 +13,47 @@ plaintext#logger {
 
 </style>
 <script src="js/utils.js" />
-<script src="js/logger.js" />
+<!--script src="js/logger.js" /-->
 <script type="module">
 
 import {logger} from "src/logger.js";
 
-// get file url
-const url = __DIR__ + "test.log";
-
-// get file path
-const file = URL.toPath(url);
-
-//console.log(`url - ${url}\nfile - ${file}`);
-
-// initialize logger
-logger.init(file, true);
-
-// export logger for second window to see it
-globalThis.logger = logger;
-
 document.on("ready", function() {
     try {
+        // get file url
+        const url = __DIR__ + "test.log";
+
+        // get file path
+        const file = URL.toPath(url);
+
+        //console.log(`url - ${url}\nfile - ${file}`);
+
+        // initialize logger
+        logger.init(file, true);
+
+        // attach logger to console
+        logger.attach();
+
+        // capture unhandled exceptions
+        logger.capture();
+
+        // export logger for second window to see it
+        globalThis.logger = logger;
+
+        const plaintext = document.$("plaintext#logger");
+
+        // subscribe to logger messages
+        logger.subscribe(function(message) {
+            plaintext.plaintext.appendLine(message);
+        });
+
+        // fixes a strange bug with the plaintext
+        plaintext.plaintext.appendLine("");
+
         // test logger
-        logger.log("new logger test");
-        logger.warn("warning");
-        logger.error("error");
+        console.log("new logger test");
+        console.warn("warning");
+        console.error("error");
     }
     catch (e) {
         console.log(`${e.message} ${e.stack}`);
@@ -45,12 +61,12 @@ document.on("ready", function() {
 });
 
 document.on("click", "button", function() {
-    logger.log("create new window");
+    console.log("create new window");
 
     var wnd = new Window({
-        parent : Window.this,
-        url    : __DIR__ + "window.html",
-        state  : Window.WINDOW_SHOWN
+        parent: Window.this,
+        url   : __DIR__ + "window.html",
+        state : Window.WINDOW_SHOWN
     });
 });
 

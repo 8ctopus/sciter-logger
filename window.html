@@ -6,10 +6,10 @@
 // get logger from parent window
 const logger = Window.this.parent.document.globalThis.logger;
 
-logger.log("logging from new window");
+console.log("logging from new window");
 
 document.on("click", "button", function() {
-    logger.log("new window button clicked");
+    console.log("new window button clicked");
 });
 
 </script>

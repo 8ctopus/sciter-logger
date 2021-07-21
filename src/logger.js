@@ -5,65 +5,161 @@
 
 import * as sys from "@sys";
 import {encode,decode} from "@sciter";
+import * as debug from "@debug";
 
 export class logger
 {
-    static #file;
-    static #console;
+    static #_file;
+    static #_clear;
+
+    static #_original = "";
+    static #_debug    = false;
+    static #_callback = null;
 
     /**
      * Initialize logger
      * @param string file - log file path
-     * @param bool console - also log to console
+     * @param bool clear - clear log file
      * @return void
      * @note use URL.toPath()
      */
-    static init(file, console)
+    static init(file, clear)
     {
-        this.#file    = file;
-        this.#console = console;
+        this.#_file  = file;
+        this.#_clear = clear;
+
+        if (clear)
+            this.#clear();
     }
 
-    static log(message)
+    /**
+     * Attach to console
+     * @return void
+     */
+    static attach()
     {
-        if (this.#console)
-            console.log(message);
+        // save original console.log function code
+        this.#_original = this.#_original || console.log;
 
-        this.#write(`${message}`);
+        // check if sciter is running with --debug flag
+        if (this.#_original === "(...args) => log(3,0,args)")
+            this.#_debug = true;
+
+        // create proxy around console object
+        console = new Proxy(console, {
+            get(target, methodName, receiver) {
+                // get origin method
+                const originMethod = target[methodName];
+
+                return function(...args) {
+                    //console.log(`called ${methodName}`);
+                    //document.$("plaintext").append(`called ${methodName}`);
+                    switch (methodName) {
+                        case "log":
+                        case "warn":
+                        case "error":
+                            // dispatch internally
+                            logger.message(methodName, args);
+
+                            // send message to subscribers
+                            logger.send(args);
+                            break;
+                    }
+
+                    // call origin method
+                    return originMethod.apply(this, args);
+                };
+            }
+        });
+
+        if (!this.#_clear) {
+            this.newLine();
+            this.newLine();
+        }
+
+        console.log("Logger started and attached to console");
+
+        console.log(`original console.log - ${this.#_original}`);
+
+        if (this.#_debug)
+            console.warn("sciter running with --debug flag");
+        else
+            console.log("sciter running without --debug flag");
     }
 
-    static warn(message)
+    /**
+     * Capture unhandled exceptions
+     * @return void
+     */
+    static capture()
     {
-        if (this.#console)
-            console.warn(message);
-
-        this.#write(`WARN - ${message}`);
+        debug.setUnhandledExeceptionHandler(function(err) {
+            console.error(err.toString() + "\r\n" + err.stack);
+        });
     }
 
-    static error(message)
+    /**
+     * Subscribe to new messages
+     * @param function func
+     * @return void
+     */
+    static subscribe(func)
     {
-        if (this.#console)
-            console.error(message);
+        this.#_callback = func;
+    }
 
-        this.#write(`ERROR - ${message}`);
+    /**
+     * Send to subscribers
+     * @param string message
+     * @return void
+     */
+    static send(message)
+    {
+        if (!this.#_callback)
+            return;
+
+        //this.message("log", `callback called - message - ${message}`);
+        // call callback
+        this.#_callback(message);
+    }
+
+    static message(method, message)
+    {
+        switch (method) {
+            case "warn":
+                message = `WARNING: ${message}`;
+                break;
+
+            case "error":
+                message = `ERROR: ${message}`;
+                break;
+        }
+
+        // add time
+        const [hh, mm, ss] = new Date().toLocaleTimeString("en-US").split(/:| /)
+
+        message = `${hh}:${mm}:${ss} ${message}`;
+
+        this.#write(message);
+    }
+
+    static newLine()
+    {
+        this.#write("");
     }
 
     /**
      * Write message to file
      * @param string message
      * @return void
+     * @note needs to be public for Proxy to access it
      */
     static #write(message)
     {
         try {
-            // add time
-            const [hh, mm, ss] = new Date().toLocaleTimeString("en-US").split(/:| /)
-
-            message = `${hh}:${mm}:${ss} ${message}`;
-
             // open file
             // https://nodejs.org/api/fs.html#fs_file_system_flags
-            sys.fs.open(this.#file, "a+", 0o666)
+            sys.fs.open(this.#_file, "a+", 0o666)
                 .then(
                     function(handle) {
                         // write message to file
@@ -78,6 +174,29 @@ export class logger
         catch (e) {
             // send message to original console method
             console.error(`write to file - FAILED - ${e.toString()}`);
+        }
+    }
+
+    /**
+     * Clear log
+     * @return void
+     */
+    static #clear()
+    {
+        try {
+            sys.fs.open(this.#_file, "w", 0o666)
+                .then(
+                    function(handle) {
+                        const buffer = encode("", "utf-8");
+                        handle.write(buffer);
+                        handle.close();
+                    },
+                    function(error) {
+                        console.error(`clear file - FAILED - ${error}`);
+                    });
+        }
+        catch (e) {
+            console.error(`clear log - FAILED - ${e.toString()}`);
         }
     }
 }
