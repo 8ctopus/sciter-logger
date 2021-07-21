@@ -52,10 +52,13 @@ export class logger
                         case "warn":
                         case "error":
                             // dispatch internally
-                            logger.message(methodName, args);
+                            const message = logger.format(methodName, args);
+
+                            // write to file
+                            logger.write(message);
 
                             // send message to subscribers
-                            logger.send(methodName, args);
+                            logger.send(methodName, message);
                             break;
                     }
 
@@ -120,9 +123,15 @@ export class logger
         this.#_callback(level, message);
     }
 
-    static message(method, message)
+    /**
+     * Format message
+     * @param string level
+     * @param string message
+     * @return string
+     */
+    static format(level, message)
     {
-        switch (method) {
+        switch (level) {
             case "warn":
                 message = `WARNING: ${message}`;
                 break;
@@ -137,14 +146,12 @@ export class logger
         // add time
         const [hh, mm, ss] = new Date().toLocaleTimeString("en-US").split(/:| /)
 
-        message = `${hh}:${mm}:${ss} ${message}`;
-
-        this.#write(message);
+        return `${hh}:${mm}:${ss} ${message}`;
     }
 
     static newLine()
     {
-        this.#write("");
+        this.write("");
     }
 
     /**
@@ -153,7 +160,7 @@ export class logger
      * @return void
      * @note needs to be public for Proxy to access it
      */
-    static #write(message)
+    static write(message)
     {
         try {
             // open file
