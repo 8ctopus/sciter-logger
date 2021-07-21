@@ -47,8 +47,6 @@ export class logger
                 const originMethod = target[methodName];
 
                 return function(...args) {
-                    //console.log(`called ${methodName}`);
-                    //document.$("plaintext").append(`called ${methodName}`);
                     switch (methodName) {
                         case "log":
                         case "warn":
