@@ -65,19 +65,19 @@ export class logger
             // https://nodejs.org/api/fs.html#fs_file_system_flags
             sys.fs.open(this.#file, "a+", 0o666)
                 .then(
-                    function(file) {
+                    function(handle) {
                         // write message to file
                         const buffer = encode(message + "\r\n", "utf-8");
-                        file.write(buffer);
-                        file.close();
+                        handle.write(buffer);
+                        handle.close();
                     },
                     function(error) {
-                        console.error(`open file - FAILED - ${error}`);
+                        console.error(`write to file - FAILED - ${error}`);
                     });
         }
         catch (e) {
             // send message to original console method
-            console.error("write file - FAILED");
+            console.error(`write to file - FAILED - ${e.toString()}`);
         }
     }
 }
