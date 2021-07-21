@@ -76,17 +76,6 @@ export class logger
         console.log("Logger started and attached to console");
     }
 
-    static debug()
-    {
-        console.log(`original console.log - ${this.#_original}`);
-
-        // check if sciter is running with --debug flag
-        if (this.#_original == "(...args) => log(3,0,args)")
-            console.warn("sciter running with --debug flag");
-        else
-            console.log("sciter running without --debug flag");
-    }
-
     /**
      * Capture unhandled exceptions
      * @return void
@@ -204,5 +193,19 @@ export class logger
         catch (e) {
             console.error(`clear log - FAILED - ${e.toString()}`);
         }
+    }
+
+    /**
+     * Debug info
+     */
+    static debug()
+    {
+        console.log(`original console.log - ${this.#_original}`);
+
+        // check if sciter is running with --debug flag
+        if (this.#_original == "(...args) => log(3,0,args)")
+            console.warn("sciter running with --debug flag");
+        else
+            console.log("sciter running without --debug flag");
     }
 }
