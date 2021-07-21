@@ -3,48 +3,8 @@
 <title>Test</title>
 <script type="module">
 
-import {logger} from "src/logger.js";
-
-// get file url
-const url = __DIR__ + "test.log";
-
-// get file path
-const file = URL.toPath(url);
-
-// initialize logger
-logger.init(file, false);
-
-const plaintext = Window.this.parent.document.$("plaintext#logger");
-
-// subscribe to logger messages
-logger.subscribe(function(level, message) {
-    let jsx = "";
-
-    switch (level) {
-        default:
-        case "log":
-            jsx = <log>{message}</log>;
-            break;
-
-        case "warn":
-            jsx = <warn>{message}</warn>;
-            break;
-
-        case "error":
-            jsx = <error>{message}</error>;
-            break;
-    }
-
-    plaintext.append(jsx);
-});
-
-// attach logger to console
-logger.attach();
-
-// capture unhandled exceptions
-logger.capture();
-
-logger.debug();
+// get console from parent window
+console = Window.this.parent.document.globalThis.console;
 
 console.log("logging from new window");
 
