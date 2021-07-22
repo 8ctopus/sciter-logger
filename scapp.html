@@ -16,7 +16,7 @@ plaintext#logger {
 <script type="module">
 
 import {logger} from "src/logger.js";
-import {addReloadWindow, centerWindow} from "js/utils.js";
+import {addReloadWindow, centerWindow} from "vendor/8ctopus/sciter-utils/src/utils.js";
 
 document.on("ready", function() {
     try {
@@ -53,7 +53,7 @@ document.on("ready", function() {
         logger.debug();
 
         // test logger
-        console.log("new logger test");
+        console.log("log");
         console.warn("warning");
         console.error("error");
         console.debug("debug");
