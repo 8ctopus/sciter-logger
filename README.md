@@ -16,7 +16,7 @@ This work was made possible thanks to [https://2ality.com/2015/10/intercepting-m
 - add the `src` dir to your project
 - add to script
 
-```js
+```html
 <script type="module">
 
 import {logger} from "src/logger.js";
@@ -33,6 +33,26 @@ logger.capture();
 // log
 console.log("new logger test");
 ```
+
+### redirect console output
+
+Console output can be redirected to any html element
+
+```js
+document.on("ready", function() {
+    const plaintext = document.$("plaintext#logger");
+
+    // subscribe to logger messages
+    logger.subscribe(function(level, message) {
+        plaintext.append(JSX(level, {}, [message]));
+
+        // scroll to last item
+        plaintext.lastElementChild.scrollIntoView({behavior: "smooth"});
+    });
+});
+```
+
+### multiple windows
 
 - as each window has its own console, you'll need to import the console object from the parent window:
 
