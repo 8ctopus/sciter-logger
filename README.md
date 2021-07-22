@@ -50,6 +50,12 @@ document.on("ready", function() {
 });
 ```
 
+Apply colors to output
+
+```html
+<style src="src/logger.css" />
+```
+
 ### multiple windows
 
 - as each window has its own console, you'll need to import the console object from the parent window:
