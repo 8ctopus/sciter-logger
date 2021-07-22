@@ -13,12 +13,10 @@ This work was made possible thanks to [https://2ality.com/2015/10/intercepting-m
 
 ## install
 
-- add the `src` dir to your project
-- add to script
+- add the `src` dir to your project or use the sciter package manager
+- in `<script type="module">`
 
-```html
-<script type="module">
-
+```js
 import {logger} from "src/logger.js";
 
 // initialize logger
