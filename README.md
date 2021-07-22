@@ -1,6 +1,6 @@
 # sciter logger
 
-This is a [sciter.js](https://sciter.com/) logger that listens to the console output and redirects it to a file.
+This is a [sciter.js](https://sciter.com/) logger that listens to the console output and redirects it to a file and/or any html element.
 
 This work was made possible thanks to [https://2ality.com/2015/10/intercepting-method-calls.html](https://2ality.com/2015/10/intercepting-method-calls.html).
 
