@@ -17,7 +17,7 @@ export class logger
 
     /**
      * Initialize logger
-     * @param string file - log file path
+     * @param string file - log file path or "" if logging to file not wanted
      * @param bool clear - clear log file
      * @return void
      * @note use URL.toPath()
@@ -27,7 +27,7 @@ export class logger
         this.#_file  = file;
         this.#_clear = clear;
 
-        if (clear)
+        if (clear && file !== "")
             this.#clear();
     }
 
@@ -152,6 +152,9 @@ export class logger
     static write(message)
     {
         try {
+            if (this.#_file === "")
+                return;
+
             // open file
             // https://nodejs.org/api/fs.html#fs_file_system_flags
             sys.fs.open(this.#_file, "a+", 0o666)
