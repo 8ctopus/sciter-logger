@@ -31,13 +31,19 @@ error {
 }
 
 </style>
-<script src="js/utils.js" />
 <script type="module">
 
 import {logger} from "src/logger.js";
+import {addReloadWindow, centerWindow} from "js/utils.js";
 
 document.on("ready", function() {
     try {
+        // add support for F5 reload
+        addReloadWindow();
+
+        // center window on screen
+        centerWindow();
+
         // get file url
         const url = __DIR__ + "test.log";
 
