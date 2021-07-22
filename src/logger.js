@@ -75,7 +75,7 @@ export class logger
             this.newLine();
         }
 
-        console.log("Logger started and attached to console");
+        console.debug("Logger started and attached to console");
     }
 
     /**
@@ -209,12 +209,12 @@ export class logger
      */
     static debug()
     {
-        console.log(`original console.log - ${this.#_original}`);
+        console.debug(`original console.log - ${this.#_original}`);
 
         // check if sciter is running with --debug flag
         if (this.#_original == "(...args) => log(3,0,args)")
             console.warn("sciter running with --debug flag");
         else
-            console.log("sciter running without --debug flag");
+            console.debug("sciter running without --debug flag");
     }
 }
