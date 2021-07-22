@@ -11,21 +11,24 @@ plaintext#logger {
     size: *;
 }
 
-log {
+plaintext > * {
     width: *;
     padding-left: 4dip;
+}
+
+debug {
+    color: rgb(150,150,150);
+}
+
+log {
     color: rgb(40,40,40);
 }
 
 warn {
-    width: *;
-    padding-left: 4dip;
     color: orange;
 }
 
 error {
-    width: *;
-    padding-left: 4dip;
     color: red;
     //font-weight: bold;
 }
@@ -74,6 +77,7 @@ document.on("ready", function() {
         console.log("new logger test");
         console.warn("warning");
         console.error("error");
+        console.debug("debug");
     }
     catch (e) {
         console.log(`${e.message} ${e.stack}`);

@@ -51,6 +51,7 @@ export class logger
                         case "log":
                         case "warn":
                         case "error":
+                        case "debug":
                             // dispatch internally
                             const message = logger.format(methodName, args);
 
@@ -62,8 +63,9 @@ export class logger
                             break;
                     }
 
-                    // call origin method
-                    return originMethod.apply(this, args);
+                    // call origin method if it exists
+                    if (originMethod)
+                        return originMethod.apply(this, args);
                 };
             }
         });
@@ -121,6 +123,10 @@ export class logger
     static format(level, message)
     {
         switch (level) {
+            case "debug":
+                message = `DEBUG: ${message}`;
+                break;
+
             case "warn":
                 message = `WARNING: ${message}`;
                 break;
