@@ -42,6 +42,9 @@ document.on("ready", function() {
         // subscribe to logger messages
         logger.subscribe(function(level, message) {
             plaintext.append(JSX(level, {}, [message]));
+
+            // scroll to last item
+            plaintext.lastElementChild.scrollIntoView({behavior: "smooth"});
         });
 
         // attach logger to console
@@ -82,7 +85,7 @@ document.on("click", "button", function() {
 </script>
 </head>
 <body>
-    <button />
+    <button>test logger in new window</button>
     <plaintext #logger readonly />
 </body>
 </html>
