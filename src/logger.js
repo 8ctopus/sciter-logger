@@ -20,7 +20,7 @@ export class logger
      * @param string file - log file path or "" if logging to file not wanted
      * @param bool clear - clear log file
      * @return void
-     * @note use URL.toPath()
+     * @note use URL.toPath() for file
      */
     static init(file, clear)
     {
@@ -144,6 +144,10 @@ export class logger
         return `${hh}:${mm}:${ss} ${message}`;
     }
 
+    /**
+     * Add new line
+     * @return void
+     */
     static newLine()
     {
         this.write("");
@@ -206,6 +210,7 @@ export class logger
 
     /**
      * Debug info
+     * @return void
      */
     static debug()
     {
