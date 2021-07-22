@@ -57,10 +57,16 @@ document.on("ready", function() {
         console.warn("warning");
         console.error("error");
         console.debug("debug");
+
+        // test handled exception
+        throw new Error("handled exception");
     }
     catch (e) {
-        console.log(`${e.message} ${e.stack}`);
+        console.error(`${e.message} ${e.stack}`);
     }
+
+    // test unhandled exception
+    throw new Error("unhandled exception");
 });
 
 document.on("click", "button", function() {
