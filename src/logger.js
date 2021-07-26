@@ -200,7 +200,7 @@ export class logger
                         handle.close();
                     },
                     function(error) {
-                        console.error(`clear file - FAILED - ${error}`);
+                        console.error(`clear log - FAILED - ${error}`);
                     });
         }
         catch (e) {
