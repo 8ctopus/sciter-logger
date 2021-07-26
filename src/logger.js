@@ -43,7 +43,7 @@ export class logger
         // create proxy around console object
         console = new Proxy(console, {
             get(target, methodName, receiver) {
-                // get origin method
+                // get original method
                 const originMethod = target[methodName];
 
                 return function(...args) {
@@ -52,10 +52,10 @@ export class logger
                         case "warn":
                         case "error":
                         case "debug":
-                            // dispatch internally
+                            // format message
                             const message = this.format(methodName, args);
 
-                            // write to file
+                            // write message to file
                             this.write(message);
 
                             // send message to subscribers
@@ -63,7 +63,7 @@ export class logger
                             break;
                     }
 
-                    // call origin method if it exists
+                    // call original method if it exists
                     if (originMethod)
                         return originMethod.apply(this, args);
                 };
