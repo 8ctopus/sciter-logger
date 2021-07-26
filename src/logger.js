@@ -53,13 +53,13 @@ export class logger
                         case "error":
                         case "debug":
                             // dispatch internally
-                            const message = logger.format(methodName, args);
+                            const message = this.format(methodName, args);
 
                             // write to file
-                            logger.write(message);
+                            this.write(message);
 
                             // send message to subscribers
-                            logger.send(methodName, message);
+                            this.send(methodName, message);
                             break;
                     }
 
@@ -97,6 +97,21 @@ export class logger
     static subscribe(callback)
     {
         this.#_callback = callback;
+    }
+
+    /**
+     * Debug info
+     * @return void
+     */
+    static debug()
+    {
+        console.debug(`original console.log - ${this.#_original}`);
+
+        // check if sciter is running with --debug flag
+        if (this.#_original == "(...args) => log(3,0,args)")
+            console.warn("sciter running with --debug flag");
+        else
+            console.debug("sciter running without --debug flag");
     }
 
     /**
@@ -142,21 +157,6 @@ export class logger
         const [hh, mm, ss] = new Date().toLocaleTimeString("en-US").split(/:| /)
 
         return `${hh}:${mm}:${ss} ${message}`;
-    }
-
-    /**
-     * Debug info
-     * @return void
-     */
-    static debug()
-    {
-        console.debug(`original console.log - ${this.#_original}`);
-
-        // check if sciter is running with --debug flag
-        if (this.#_original == "(...args) => log(3,0,args)")
-            console.warn("sciter running with --debug flag");
-        else
-            console.debug("sciter running without --debug flag");
     }
 
     /**
