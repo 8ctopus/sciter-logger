@@ -20,7 +20,7 @@ export class logger
      * @param string file - log file path or "" if logging to file not wanted
      * @param bool clear - clear log file
      * @return void
-     * @note use URL.toPath() for file
+     * @note use URL.toPath() to generate file
      */
     static init(file, clear)
     {
@@ -71,8 +71,8 @@ export class logger
         });
 
         if (!this.#_clear) {
-            this.newLine();
-            this.newLine();
+            this.#newLine();
+            this.#newLine();
         }
 
         console.debug("Logger started and attached to console");
@@ -100,7 +100,7 @@ export class logger
     }
 
     /**
-     * Send to subscribers
+     * Send message to subscribers
      * @param string level
      * @param string message
      * @return void
@@ -145,12 +145,18 @@ export class logger
     }
 
     /**
-     * Add new line
+     * Debug info
      * @return void
      */
-    static newLine()
+    static debug()
     {
-        this.write("");
+        console.debug(`original console.log - ${this.#_original}`);
+
+        // check if sciter is running with --debug flag
+        if (this.#_original == "(...args) => log(3,0,args)")
+            console.warn("sciter running with --debug flag");
+        else
+            console.debug("sciter running without --debug flag");
     }
 
     /**
@@ -186,6 +192,15 @@ export class logger
     }
 
     /**
+     * Add new line
+     * @return void
+     */
+    static #newLine()
+    {
+        this.write("");
+    }
+
+    /**
      * Clear log
      * @return void
      */
@@ -206,20 +221,5 @@ export class logger
         catch (e) {
             console.error(`clear log - FAILED - ${e.toString()}`);
         }
-    }
-
-    /**
-     * Debug info
-     * @return void
-     */
-    static debug()
-    {
-        console.debug(`original console.log - ${this.#_original}`);
-
-        // check if sciter is running with --debug flag
-        if (this.#_original == "(...args) => log(3,0,args)")
-            console.warn("sciter running with --debug flag");
-        else
-            console.debug("sciter running without --debug flag");
     }
 }
