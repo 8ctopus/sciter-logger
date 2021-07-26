@@ -38,6 +38,7 @@ export class logger
      */
     static attach()
     {
+        // check if already attached to console
         if (this.#_attached)
             return;
 

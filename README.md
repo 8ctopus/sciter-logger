@@ -67,3 +67,7 @@ Apply colors to output
 // get console from parent window
 console = Window.this.parent.document.globalThis.console;
 ```
+
+## known issues
+
+- `logger` methods `format`, `write` and `send` should be private but presently can't be because called inside the `Proxy`.
