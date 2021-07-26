@@ -57,13 +57,13 @@ export class logger
                         case "error":
                         case "debug":
                             // format message
-                            const message = this.format(methodName, args);
+                            const message = logger.format(methodName, args);
 
                             // write message to file
-                            this.write(message);
+                            logger.write(message);
 
                             // send message to subscribers
-                            this.send(methodName, message);
+                            logger.send(methodName, message);
                             break;
                     }
 
