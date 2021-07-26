@@ -12,6 +12,7 @@ export class logger
     static #_file;
     static #_clear;
 
+    static #_attached = false;
     static #_original = "";
     static #_callback = null;
 
@@ -37,8 +38,11 @@ export class logger
      */
     static attach()
     {
+        if (this.#_attached)
+            return;
+
         // save original console.log function code
-        this.#_original = this.#_original || console.log;
+        this.#_original = console.log;
 
         // create proxy around console object
         console = new Proxy(console, {
@@ -75,6 +79,7 @@ export class logger
             this.#newLine();
         }
 
+        this.#_attached = true;
         console.debug("Logger started and attached to console");
     }
 
