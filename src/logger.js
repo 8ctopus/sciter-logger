@@ -24,7 +24,7 @@ export class logger
      */
     static init(file, clear)
     {
-        this.#_file  = file;
+        this.#_file = file;
 
         if (file === "")
             return;
@@ -212,19 +212,14 @@ export class logger
      * Clear log
      * @return void
      */
-    static #clear()
+    static async #clear()
     {
         try {
-            sys.fs.open(this.#_file, "w", 0o666)
-                .then(
-                    function(handle) {
-                        const buffer = encode("", "utf-8");
-                        handle.write(buffer);
-                        handle.close();
-                    },
-                    function(error) {
-                        console.error(`clear log - FAILED - ${error}`);
-                    });
+            const handle = await sys.fs.open(this.#_file, "w", 0o666)
+
+            const buffer = encode("", "utf-8");
+            await handle.write(buffer);
+            await handle.close();
         }
         catch (e) {
             console.error(`clear log - FAILED - ${e.toString()}`);
