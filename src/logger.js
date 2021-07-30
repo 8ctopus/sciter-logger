@@ -10,7 +10,6 @@ import * as debug from "@debug";
 export class logger
 {
     static #_file;
-    static #_clear;
 
     static #_attached = false;
     static #_original = "";
@@ -26,10 +25,16 @@ export class logger
     static init(file, clear)
     {
         this.#_file  = file;
-        this.#_clear = clear;
 
-        if (clear && file !== "")
+        if (file === "")
+            return;
+
+        if (clear)
             this.#clear();
+        else {
+            this.#newLine();
+            this.#newLine();
+        }
     }
 
     /**
@@ -76,11 +81,6 @@ export class logger
                 };
             }
         });
-
-        if (!this.#_clear) {
-            this.#newLine();
-            this.#newLine();
-        }
 
         this.#_attached = true;
         console.debug("Logger started and attached to console");
