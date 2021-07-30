@@ -170,10 +170,9 @@ export class logger
     /**
      * Write message to file
      * @param string message
-     * @return void
-     * @note needs to be public for Proxy to access it
+     * @return Promise
      */
-    static #write(message)
+    static async #write(message)
     {
         try {
             if (this.#_file === "")
@@ -181,17 +180,12 @@ export class logger
 
             // open file
             // https://nodejs.org/api/fs.html#fs_file_system_flags
-            sys.fs.open(this.#_file, "a+", 0o666)
-                .then(
-                    function(handle) {
-                        // write message to file
-                        const buffer = encode(message + "\r\n", "utf-8");
-                        handle.write(buffer);
-                        handle.close();
-                    },
-                    function(error) {
-                        console.error(`write to file - FAILED - ${error}`);
-                    });
+            const handle = await sys.fs.open(this.#_file, "a+", 0o666)
+
+            // write message to file
+            const buffer = encode(message + "\r\n", "utf-8");
+            await handle.write(buffer);
+            await handle.close();
         }
         catch (e) {
             // send message to original console method
@@ -210,7 +204,7 @@ export class logger
 
     /**
      * Clear log
-     * @return void
+     * @return Promise
      */
     static async #clear()
     {
