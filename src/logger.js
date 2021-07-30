@@ -45,6 +45,8 @@ export class logger
         // save original console.log function code
         this.#_original = console.log;
 
+        const loggerThis = this;
+
         // create proxy around console object
         console = new Proxy(console, {
             get(target, methodName, receiver) {
@@ -58,13 +60,13 @@ export class logger
                         case "error":
                         case "debug":
                             // format message
-                            const message = logger.format(methodName, args);
+                            const message = loggerThis.#format(methodName, args);
 
                             // write message to file
-                            logger.write(message);
+                            loggerThis.#write(message);
 
                             // send message to subscribers
-                            logger.send(methodName, message);
+                            loggerThis.#send(methodName, message);
                             break;
                     }
 
@@ -126,7 +128,7 @@ export class logger
      * @param string message
      * @return void
      */
-    static send(level, message)
+    static #send(level, message)
     {
         if (!this.#_callback)
             return;
@@ -141,7 +143,7 @@ export class logger
      * @param string message
      * @return string
      */
-    static format(level, message)
+    static #format(level, message)
     {
         switch (level) {
             case "debug":
@@ -171,7 +173,7 @@ export class logger
      * @return void
      * @note needs to be public for Proxy to access it
      */
-    static write(message)
+    static #write(message)
     {
         try {
             if (this.#_file === "")
@@ -203,7 +205,7 @@ export class logger
      */
     static #newLine()
     {
-        this.write("");
+        this.#write("");
     }
 
     /**
