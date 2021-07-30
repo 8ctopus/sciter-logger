@@ -1,7 +1,7 @@
 <html
     window-resizable="true"
-    window-width="500dip"
-    window-height="300dip"
+    window-width="600dip"
+    window-height="400dip"
 >
 <head>
 <title>sciter logger demo</title>
@@ -31,12 +31,15 @@ document.on("ready", function() {
         const url = __DIR__ + "test.log";
 
         // get file path
-        const file = URL.toPath(url);
+        const path = URL.toPath(url);
 
-        //console.log(`url - ${url}\nfile - ${file}`);
+        //console.log(`url - ${url}\npath - ${path}`);
+        console.log("logger init...");
 
         // initialize logger
-        logger.init(file, true);
+        logger.init(path, false);
+
+        console.log("logger init - OK");
 
         const plaintext = document.$("plaintext#logger");
 
@@ -48,8 +51,12 @@ document.on("ready", function() {
             plaintext.lastElementChild.scrollIntoView({behavior: "smooth"});
         });
 
+        console.log("logger attach...");
+
         // attach logger to console
         logger.attach();
+
+        console.log("logger attach - OK");
 
         // capture unhandled exceptions
         logger.capture();
@@ -73,7 +80,7 @@ document.on("ready", function() {
     throw new Error("unhandled exception");
 });
 
-document.on("click", "button", function() {
+document.on("click", "button#window", function() {
     console.log("create new window");
 
     var wnd = new Window({
@@ -86,7 +93,7 @@ document.on("click", "button", function() {
 </script>
 </head>
 <body>
-    <button>test logger in new window</button>
+    <button #window>test logger in new window</button>
     <plaintext #logger readonly />
 </body>
 </html>
