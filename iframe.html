@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>Test</title>
+<script type="module">
+
+// get console from iframe parent
+console = Window.this.document.globalThis.console;
+
+console.log("logging from iframe");
+
+document.on("click", "button", function() {
+    console.log("iframe button clicked");
+});
+
+</script>
+</head>
+<body>
+    <button>button in iframe</button>
+</body>
+</html>

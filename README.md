@@ -68,6 +68,15 @@ Apply colors to output
 console = Window.this.parent.document.globalThis.console;
 ```
 
+### iframe
+
+- iframes also have their own console, you'll need to import the parent console
+
+```js
+// get console from iframe parent
+console = Window.this.document.globalThis.console;
+```
+
 ## known issues
 
 - `logger` methods `format`, `write` and `send` should be private but presently can't be because called inside the `Proxy`.
