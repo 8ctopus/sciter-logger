@@ -68,6 +68,15 @@ Apply colors to output
 console = Window.this.parent.document.globalThis.console;
 ```
 
+- unhandled exceptions must also be captured in every new window
+
+```js
+import {logger} from "src/logger.js";
+
+// capture unhandled exceptions
+logger.capture();
+```
+
 ### iframe
 
 - iframes also have their own console, you'll need to import the parent console

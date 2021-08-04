@@ -3,13 +3,31 @@
 <title>Test</title>
 <script type="module">
 
+import {logger} from "src/logger.js";
+
 // get console from parent window
 console = Window.this.parent.document.globalThis.console;
 
 console.log("logging from new window");
 
+// capture unhandled exceptions
+logger.capture();
+
+document.on("ready", function() {
+    try {
+        // test handled exception
+        throw new Error("handled exception");
+    }
+    catch (e) {
+        console.error(`${e.message} ${e.stack}`);
+    }
+});
+
 document.on("click", "button", function() {
     console.log("new window button clicked");
+
+    // test unhandled exception
+    throw new Error("unhandled exception");
 });
 
 </script>
