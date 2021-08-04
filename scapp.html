@@ -23,8 +23,12 @@ plaintext#logger {
 import {logger} from "src/logger.js";
 import {addReloadWindow, centerWindow} from "vendor/8ctopus/sciter-utils/src/utils.js";
 
-document.on("ready", function() {
+document.on("ready", function(event, element) {
     try {
+        // do not handle iframe ready
+        if (element.parentElement)
+            return;
+
         // add support for F5 reload
         addReloadWindow();
 
@@ -60,7 +64,7 @@ document.on("ready", function() {
         // attach logger to console
         logger.attach();
 
-        console.log("logger attach - OK");
+        console.debug("logger attach - OK");
 
         // capture unhandled exceptions
         logger.capture();
@@ -74,14 +78,14 @@ document.on("ready", function() {
         console.debug("debug");
 
         // test handled exception
-        throw new Error("handled exception");
+        throw new Error("main handled exception");
     }
     catch (e) {
         console.error(`${e.message} ${e.stack}`);
     }
 
     // test unhandled exception
-    throw new Error("unhandled exception");
+    throw new Error("main unhandled exception");
 });
 
 document.on("click", "button#window", function() {

@@ -16,7 +16,7 @@ logger.capture();
 document.on("ready", function() {
     try {
         // test handled exception
-        throw new Error("handled exception");
+        throw new Error("window handled exception");
     }
     catch (e) {
         console.error(`${e.message} ${e.stack}`);
@@ -27,7 +27,7 @@ document.on("click", "button", function() {
     console.log("new window button clicked");
 
     // test unhandled exception
-    throw new Error("unhandled exception");
+    throw new Error("window unhandled exception");
 });
 
 </script>

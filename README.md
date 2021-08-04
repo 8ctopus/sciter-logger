@@ -61,14 +61,14 @@ Apply colors to output
 
 ### multiple windows
 
-- as each window has its own console, you'll need to import the console object from the parent window:
+- as each `Window` has its own console, you'll need to use the `console` object from the parent window:
 
 ```js
 // get console from parent window
 console = Window.this.parent.document.globalThis.console;
 ```
 
-- unhandled exceptions must also be captured in every new window
+- unhandled exceptions must also be captured in every new `Window`
 
 ```js
 import {logger} from "src/logger.js";
@@ -79,12 +79,7 @@ logger.capture();
 
 ### iframe
 
-- iframes also have their own console, you'll need to import the parent console
-
-```js
-// get console from iframe parent
-console = Window.this.document.globalThis.console;
-```
+`iframe`s behave just like `Window` in that aspect.
 
 ## known issues
 
