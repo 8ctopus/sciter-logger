@@ -35,6 +35,16 @@ logger.capture();
 console.log("new logger test");
 ```
 
+### exhanced console
+
+Console is enhanced with new methods
+
+```
+console.debug("test debug");
+console.note("test note");
+console.exception("test exception");
+```
+
 ### redirect console output
 
 Console output can be redirected to any html element
@@ -53,7 +63,7 @@ document.on("ready", function() {
 });
 ```
 
-Apply colors to output
+Output can be colored if you include the stylesheet
 
 ```html
 <style src="src/logger.css" />
