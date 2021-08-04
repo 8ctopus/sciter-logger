@@ -63,7 +63,10 @@ export class logger
                         case "log":
                         case "warn":
                         case "error":
+
+                        // new functions
                         case "debug":
+                        case "note":
                             // format message
                             const message = loggerThis.#format(methodName, args);
 
@@ -150,12 +153,16 @@ export class logger
                 message = `DEBUG: ${message}`;
                 break;
 
-            case "warn":
-                message = `WARNING: ${message}`;
-                break;
-
             case "error":
                 message = `ERROR: ${message}`;
+                break;
+
+            case "note":
+                message = `NOTE: ${message}`;
+                break;
+
+            case "warn":
+                message = `WARNING: ${message}`;
                 break;
 
             default:

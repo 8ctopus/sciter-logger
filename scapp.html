@@ -72,10 +72,11 @@ document.on("ready", function(event, element) {
         logger.debug();
 
         // test logger
+        console.debug("debug");
         console.log("log");
+        console.note("note");
         console.warn("warning");
         console.error("error");
-        console.debug("debug");
 
         // test handled exception
         throw new Error("main handled exception");

@@ -8,15 +8,20 @@ debug {
     color: rgb(150,150,150);
 }
 
+error {
+    color: red;
+    //font-weight: bold;
+}
+
 log {
     color: rgb(40,40,40);
+}
+
+note {
+    color: green;
 }
 
 warn {
     color: orange;
 }
 
-error {
-    color: red;
-    //font-weight: bold;
-}
