@@ -69,7 +69,7 @@ Output can be colored if you include the stylesheet
 <style src="src/logger.css" />
 ```
 
-### multiple windows
+### multiple windows and iframes
 
 - as each `Window` has its own console, you'll need to use the `console` object from the parent window:
 
@@ -87,8 +87,8 @@ import {logger} from "src/logger.js";
 logger.capture();
 ```
 
-### iframe
-
-`iframe`s behave just like `Window` in that aspect.
+`iframe`s behave just like `Window`s in that aspect.
 
 ## known issues
+
+- no known issues
