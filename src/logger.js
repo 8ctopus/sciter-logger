@@ -60,6 +60,7 @@ export class logger
 
                 return function(...args) {
                     switch (methodName) {
+                        case "exception":
                         case "log":
                         case "warn":
                         case "error":
@@ -95,8 +96,16 @@ export class logger
      */
     static capture()
     {
-        debug.setUnhandledExeceptionHandler(function(err) {
-            console.error(err.toString() + "\r\n" + err.stack);
+        debug.setUnhandledExeceptionHandler((err) => {
+            let message = err.toString() + "\r\n" + err.stack;
+
+            // cleanup message
+            message = message.replace("Error: ", "");
+
+            if (console.exception !== undefined)
+                console.exception(message);
+            else
+                console.error(message);
         });
     }
 
@@ -155,6 +164,10 @@ export class logger
 
             case "error":
                 message = `ERROR: ${message}`;
+                break;
+
+            case "exception":
+                message = `EXCEPTION: ${message}`;
                 break;
 
             case "note":

@@ -77,12 +77,13 @@ document.on("ready", function(event, element) {
         console.note("note");
         console.warn("warning");
         console.error("error");
+        console.exception("exception");
 
         // test handled exception
         throw new Error("main handled exception");
     }
     catch (e) {
-        console.error(`${e.message} ${e.stack}`);
+        console.exception(`${e.message} ${e.stack}`);
     }
 
     // test unhandled exception

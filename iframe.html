@@ -21,7 +21,7 @@ document.on("click", "button", function() {
         throw new Error("iframe handled exception");
     }
     catch (e) {
-        console.error(`${e.message} ${e.stack}`);
+        console.exception(`${e.message} ${e.stack}`);
     }
 
     // test unhandled exception

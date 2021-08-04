@@ -8,7 +8,8 @@ debug {
     color: rgb(150,150,150);
 }
 
-error {
+error,
+exception {
     color: red;
     //font-weight: bold;
 }

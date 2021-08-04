@@ -19,15 +19,15 @@ document.on("ready", function() {
         throw new Error("window handled exception");
     }
     catch (e) {
-        console.error(`${e.message} ${e.stack}`);
+        console.exception(`${e.message} ${e.stack}`);
     }
+
+    // test unhandled exception
+    throw new Error("window unhandled exception");
 });
 
 document.on("click", "button", function() {
     console.log("new window button clicked");
-
-    // test unhandled exception
-    throw new Error("window unhandled exception");
 });
 
 </script>
