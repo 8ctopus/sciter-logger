@@ -7,6 +7,10 @@
 <title>sciter logger demo</title>
 <style>
 
+iframe {
+    height: 15%;
+}
+
 plaintext#logger {
     size: *;
 }
@@ -81,12 +85,15 @@ document.on("ready", function() {
 });
 
 document.on("click", "button#window", function() {
-    console.log("create new window");
+    console.log("create new window...");
 
-    var wnd = new Window({
+    new Window({
         parent: Window.this,
         url   : __DIR__ + "window.html",
         state : Window.WINDOW_SHOWN,
+        alignment: 6,
+        width: 300,
+        height: 200,
     });
 });
 
