@@ -135,6 +135,23 @@ export class logger
     }
 
     /**
+     * Set window or iframe console to parent console
+     * @return void
+     */
+    static setConsole()
+    {
+        // check for parent window
+        if (Window.this && Window.this.parent)
+            console = Window.this.parent.document.globalThis.console;
+        else
+        // check for iframe
+        if (document.parentElement && document.parentElement.ownerDocument)
+            console = document.parentElement.ownerDocument.globalThis.console;
+        else
+            console.error("setConsole - FAILED");
+    }
+
+    /**
      * Send message to subscribers
      * @param string level
      * @param string message

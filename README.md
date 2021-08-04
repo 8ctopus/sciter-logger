@@ -74,11 +74,13 @@ Output can be colored if you include the stylesheet
 - as each `Window` has its own console, you'll need to use the `console` object from the parent window:
 
 ```js
-// get console from parent window
-console = Window.this.parent.document.globalThis.console;
+import {logger} from "src/logger.js";
+
+// get console from parent
+logger.setConsole();
 ```
 
-- unhandled exceptions must also be captured in every new `Window`
+- unhandled exceptions must also be captured in every new `Window`.
 
 ```js
 import {logger} from "src/logger.js";

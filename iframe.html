@@ -6,7 +6,7 @@
 import {logger} from "src/logger.js";
 
 // get console from iframe parent
-console = Window.this.document.globalThis.console;
+logger.setConsole();
 
 console.log("logging from iframe");
 
