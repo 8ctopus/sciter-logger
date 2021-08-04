@@ -82,5 +82,3 @@ logger.capture();
 `iframe`s behave just like `Window` in that aspect.
 
 ## known issues
-
-- `logger` methods `format`, `write` and `send` should be private but presently can't be because called inside the `Proxy`.
