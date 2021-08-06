@@ -15,13 +15,13 @@ plaintext#logger {
     size: *;
 }
 
-@import url(src/logger.css)
+@import url(src/logger.css);
 
 </style>
 <script type="module">
 
 import {logger} from "src/logger.js";
-import {addReloadWindow, centerWindow} from "vendor/8ctopus/sciter-utils/src/utils.js";
+import * as utils from "vendor/8ctopus/sciter-utils/src/utils.js";
 
 document.on("ready", function(event, element) {
     try {
@@ -30,10 +30,16 @@ document.on("ready", function(event, element) {
             return;
 
         // add support for F5 reload
-        addReloadWindow();
+        utils.addReloadWindow();
 
         // center window on screen
-        centerWindow();
+        utils.centerWindow("screen");
+
+        // close window on escape key press
+        utils.closeWindowOnEscape();
+
+        // bring window to front
+        utils.windowToFront();
 
         // get file url
         const url = __DIR__ + "test.log";
