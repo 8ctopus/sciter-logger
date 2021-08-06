@@ -35,7 +35,7 @@ logger.capture();
 console.log("new logger test");
 ```
 
-### exhanced console
+### enhanced console
 
 Console is enhanced with new methods
 
