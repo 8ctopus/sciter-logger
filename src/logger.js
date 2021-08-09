@@ -152,6 +152,15 @@ export class logger
     }
 
     /**
+     * Check if logger is attached to console
+     * @return bool
+     */
+    static isAttached()
+    {
+        return typeof console.exception === "function";
+    }
+
+    /**
      * Send message to subscribers
      * @param string level
      * @param string message
