@@ -10,9 +10,9 @@ import * as debug from "@debug";
 export class logger
 {
     static #_file;
+    static #_original;
 
     static #_attached = false;
-    static #_original = "";
     static #_callback = null;
 
     /**
