@@ -56,16 +56,16 @@ export class logger
         console = new Proxy(console, {
             get(target, methodName, receiver) {
                 // get original method
-                const originMethod = target[methodName];
+                let originMethod = target[methodName];
 
                 return function(...args) {
                     switch (methodName) {
-                        case "exception":
                         case "log":
                         case "warn":
                         case "error":
 
-                        // new functions
+                        // new methods
+                        case "exception":
                         case "debug":
                         case "note":
                             // format message
@@ -76,6 +76,14 @@ export class logger
 
                             // send message to subscribers
                             loggerThis.#send(methodName, message);
+
+                            // use closest method in native console
+                            if (methodName === "note" || methodName === "debug")
+                                originMethod = target["log"];
+                            else
+                            if (methodName === "exception")
+                                originMethod = target["error"];
+
                             break;
                     }
 
