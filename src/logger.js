@@ -65,11 +65,17 @@ export class logger
                         case "error":
 
                         // new methods
-                        case "exception":
                         case "debug":
+                        case "exception":
+                        case "line":
                         case "note":
                             // format message
-                            const message = loggerThis.#format(methodName, args);
+                            let message;
+
+                            if (methodName !== "line")
+                                message = loggerThis.#format(methodName, args);
+                            else
+                                message = "-----------------------------------------------------------------";
 
                             // write message to file
                             loggerThis.#write(message);
@@ -78,7 +84,7 @@ export class logger
                             loggerThis.#send(methodName, message);
 
                             // use closest method in native console
-                            if (methodName === "note" || methodName === "debug")
+                            if (methodName === "note" || methodName === "debug" || methodName === "line")
                                 originMethod = target["log"];
                             else
                             if (methodName === "exception")
