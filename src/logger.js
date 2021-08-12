@@ -84,8 +84,13 @@ export class logger
                             loggerThis.#send(methodName, message);
 
                             // use closest method in native console
-                            if (methodName === "note" || methodName === "debug" || methodName === "line")
+                            if (methodName === "note" || methodName === "debug")
                                 originMethod = target["log"];
+                            else
+                            if (methodName === "line") {
+                                originMethod = target["log"];
+                                args[0] = message;
+                            }
                             else
                             if (methodName === "exception")
                                 originMethod = target["error"];
