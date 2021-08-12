@@ -94,3 +94,9 @@ logger.capture();
 ## known issues
 
 - no known issues
+
+## ideas
+
+- open log file only once? would require non-exclusive rights to the file
+- spawn a separate logging window
+- add icons for each channel
