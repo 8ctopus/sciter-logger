@@ -56,10 +56,13 @@ document.on("ready", function(event, element) {
 
         console.log("logger init - OK");
 
-        const plaintext = document.$("plaintext#logger");
-
         // subscribe to logger messages
         logger.subscribe(function(level, message) {
+            const plaintext = document.$("plaintext#logger");
+
+            if (!plaintext)
+                return;
+
             plaintext.append(JSX(level, {}, [message]));
 
             // scroll to last item
