@@ -47,26 +47,24 @@ console.exception("test exception");
 
 ### redirect console output
 
-Console output can be redirected to any html element
+Console output can be redirected to a plaintext element
 
 ```js
-document.on("ready", function() {
-    const plaintext = document.$("plaintext#logger");
-
-    // subscribe to logger messages
-    logger.subscribe(function(level, message) {
-        plaintext.append(JSX(level, {}, [message]));
-
-        // scroll to last item
-        plaintext.lastElementChild.scrollIntoView({behavior: "smooth"});
-    });
-});
+logger.plaintext(document.$("plaintext"));
 ```
 
 Output can be colored if you include the stylesheet
 
 ```html
 <style src="src/logger.css" />
+```
+
+### subscribe to logger
+
+````js
+logger.subscribe(function(level, message) {
+
+});
 ```
 
 ### multiple windows and iframes
