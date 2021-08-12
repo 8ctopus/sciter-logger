@@ -15,6 +15,8 @@ export class logger
     static #_attached = false;
     static #_callback = null;
 
+    static #_plaintext = null;
+
     /**
      * Initialize logger
      * @param string file - log file path or "" if logging to file not wanted
@@ -144,6 +146,16 @@ export class logger
     }
 
     /**
+     * Add plaintext
+     * @param plaintext element
+     * @return void
+     */
+    static plaintext(element)
+    {
+        this.#_plaintext = element;
+    }
+
+    /**
      * Debug info
      * @return void
      */
@@ -192,11 +204,17 @@ export class logger
      */
     static #send(level, message)
     {
-        if (!this.#_callback)
+        if (this.#_callback)
+            // call callback
+            this.#_callback(level, message);
+
+        if (!this.#_plaintext)
             return;
 
-        // call callback
-        this.#_callback(level, message);
+        this.#_plaintext.append(JSX(level, {}, [message]));
+
+        // scroll to last item
+        this.#_plaintext.lastElementChild.scrollIntoView({behavior: "smooth"});
     }
 
     /**
