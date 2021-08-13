@@ -42,17 +42,13 @@ document.on("ready", function(event, element) {
         // bring window to front
         utils.windowToFront();
 
-        // get file url
-        const url = __DIR__ + "test.log";
-
-        // get file path
-        const path = URL.toPath(url);
-
-        //console.log(`url - ${url}\npath - ${path}`);
         console.log("logger init...");
 
         // initialize logger
-        logger.init(path, true);
+        logger.init({
+            file: URL.toPath(__DIR__ + "test.log"),
+            clear: true,
+        });
 
         console.log("logger init - OK");
 

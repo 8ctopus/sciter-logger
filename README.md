@@ -23,7 +23,10 @@ This work was made possible thanks to [https://2ality.com/2015/10/intercepting-m
 import {logger} from "src/logger.js";
 
 // initialize logger
-logger.init(URL.toPath(__DIR__ + "test.log", true));
+logger.init({
+    file: URL.toPath(__DIR__ + "test.log"),
+    clear: true,
+});
 
 // attach logger to console
 logger.attach();
@@ -39,10 +42,24 @@ console.log("new logger test");
 
 Console is enhanced with new methods
 
-```
+```js
 console.debug("test debug");
-console.note("test note");
 console.exception("test exception");
+console.note("test note");
+console.line();
+```
+
+Objects are converted to string
+
+````js
+console.debug({
+    a: 1,
+    b: {
+        alpha: "test",
+        beta: "yet another test"
+    },
+    c: 3,
+});
 ```
 
 ### redirect console output

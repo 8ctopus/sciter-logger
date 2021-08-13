@@ -9,7 +9,7 @@ import * as debug from "@debug";
 
 export class logger
 {
-    static #_file;
+    static #_file = "";
     static #_original;
 
     static #_attached = false;
@@ -19,19 +19,26 @@ export class logger
 
     /**
      * Initialize logger
-     * @param string file - log file path or "" if logging to file not wanted
-     * @param bool clear - clear log file
+     * @param object (optional) options
      * @return void
      * @note use URL.toPath() to generate file
      */
-    static init(file, clear)
+    static init(options)
     {
-        this.#_file = file;
-
-        if (file === "")
+        if (typeof options === "undefined")
             return;
 
-        if (clear)
+        if (typeof options !== "object") {
+            console.error(`options not an object`);
+            return;
+        }
+
+        this.#_file = options.file ?? "";
+
+        if (this.#_file === "")
+            return;
+
+        if (options.clear ?? false)
             this.#clear();
         else {
             this.#newLine();
