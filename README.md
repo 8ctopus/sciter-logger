@@ -51,7 +51,7 @@ console.line();
 
 Objects are converted to string
 
-````js
+```js
 console.debug({
     a: 1,
     b: {
