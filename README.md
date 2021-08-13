@@ -86,7 +86,7 @@ logger.subscribe(function(level, message) {
 
 ### multiple windows and iframes
 
-- as each `Window` has its own console, you'll need to use the `console` object from the parent window:
+- as each `Window` has its own console, you will need to use the `console` object from the parent window:
 
 ```js
 import {logger} from "src/logger.js";
