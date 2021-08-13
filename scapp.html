@@ -84,14 +84,14 @@ document.on("ready", function(event, element) {
         console.exception("exception");
 
         // log object
-        console.log(JSON.stringify({
+        console.log({
             a: 1,
             b: {
                 alpha: "test",
                 beta: "yet another test"
             },
             c: 3,
-        }, null, 4));
+        });
 
         test();
 

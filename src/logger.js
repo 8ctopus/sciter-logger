@@ -75,7 +75,7 @@ export class logger
                             let message;
 
                             if (methodName !== "line")
-                                message = loggerThis.#format(methodName, args);
+                                message = loggerThis.#format(methodName, args[0]);
                             else
                                 message = "-----------------------------------------------------------------";
 
@@ -220,11 +220,14 @@ export class logger
     /**
      * Format message
      * @param string level
-     * @param string message
+     * @param string|object message
      * @return string
      */
     static #format(level, message)
     {
+        if (typeof message === "object")
+            message = JSON.stringify(message, null, 3);
+
         switch (level) {
             case "debug":
                 message = `DEBUG: ${message}`;
