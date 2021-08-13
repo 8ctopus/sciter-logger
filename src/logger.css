@@ -2,6 +2,7 @@ plaintext#logger > *,
 #logger > * {
     width: *;
     padding-left: 4dip;
+    white-space: pre;
 }
 
 debug {

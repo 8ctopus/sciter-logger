@@ -83,6 +83,16 @@ document.on("ready", function(event, element) {
         console.error("error");
         console.exception("exception");
 
+        // log object
+        console.log(JSON.stringify({
+            a: 1,
+            b: {
+                alpha: "test",
+                beta: "yet another test"
+            },
+            c: 3,
+        }, null, 4));
+
         test();
 
         // test handled exception
