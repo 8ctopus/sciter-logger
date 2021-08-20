@@ -9,13 +9,13 @@ import * as debug from "@debug";
 
 export class logger
 {
-    static #_file = "";
-    static #_original;
+    static #file = "";
+    static #original;
 
-    static #_attached = false;
-    static #_callback = null;
+    static #attached = false;
+    static #callback = null;
 
-    static #_plaintext = null;
+    static #plaintext = null;
 
     /**
      * Initialize logger
@@ -38,12 +38,12 @@ export class logger
 
             // validate path
             if (/^[a-z]:((\\|\/)[a-z0-9\s_@\-^!#$%&+={}\[\]]+)+\.[a-z]+$/i.test(options.file))
-                this.#_file = options.file;
+                this.#file = options.file;
             else
                 console.error("invalid file path");
         }
 
-        if (this.#_file === "")
+        if (this.#file === "")
             return;
 
         if (options.clear ?? false)
@@ -61,11 +61,11 @@ export class logger
     static attach()
     {
         // check if already attached to console
-        if (this.#_attached)
+        if (this.#attached)
             return;
 
         // save original console.log function code
-        this.#_original = console.log;
+        this.#original = console.log;
 
         const loggerThis = this;
 
@@ -127,7 +127,7 @@ export class logger
             }
         });
 
-        this.#_attached = true;
+        this.#attached = true;
         console.debug("logger started and attached to console");
     }
 
@@ -157,7 +157,7 @@ export class logger
      */
     static subscribe(callback)
     {
-        this.#_callback = callback;
+        this.#callback = callback;
     }
 
     /**
@@ -172,7 +172,7 @@ export class logger
             return;
         }
 
-        this.#_plaintext = element;
+        this.#plaintext = element;
     }
 
     /**
@@ -181,10 +181,10 @@ export class logger
      */
     static debug()
     {
-        console.debug(`original console.log - ${this.#_original}`);
+        console.debug(`original console.log - ${this.#original}`);
 
         // check if sciter is running with --debug flag
-        if (this.#_original == "(...args) => log(3,0,args)")
+        if (this.#original == "(...args) => log(3,0,args)")
             console.warn("sciter running with --debug flag");
         else
             console.debug("sciter running without --debug flag");
@@ -224,17 +224,17 @@ export class logger
      */
     static #send(level, message)
     {
-        if (this.#_callback)
+        if (this.#callback)
             // call callback
-            this.#_callback(level, message);
+            this.#callback(level, message);
 
-        if (!this.#_plaintext)
+        if (!this.#plaintext)
             return;
 
-        this.#_plaintext.append(JSX(level, {}, [message]));
+        this.#plaintext.append(JSX(level, {}, [message]));
 
         // scroll to last item
-        this.#_plaintext.lastElementChild.scrollIntoView({behavior: "smooth"});
+        this.#plaintext.lastElementChild.scrollIntoView({behavior: "smooth"});
     }
 
     /**
@@ -286,12 +286,12 @@ export class logger
     static async #write(message)
     {
         try {
-            if (this.#_file === "")
+            if (this.#file === "")
                 return;
 
             // open file
             // https://nodejs.org/api/fs.html#fs_file_system_flags
-            const handle = await sys.fs.open(this.#_file, "a+", 0o666)
+            const handle = await sys.fs.open(this.#file, "a+", 0o666)
 
             // write message to file
             const buffer = encode(message + "\r\n", "utf-8");
@@ -320,7 +320,7 @@ export class logger
     static async #clear()
     {
         try {
-            const handle = await sys.fs.open(this.#_file, "w", 0o666)
+            const handle = await sys.fs.open(this.#file, "w", 0o666)
 
             const buffer = encode("", "utf-8");
             await handle.write(buffer);
