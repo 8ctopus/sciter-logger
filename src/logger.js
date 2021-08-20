@@ -33,7 +33,15 @@ export class logger
             return;
         }
 
-        this.#_file = options.file ?? "";
+        if (typeof options.file === "string") {
+            //console.log(options.file);
+
+            // validate path
+            if (/^[a-z]:((\\|\/)[a-z0-9\s_@\-^!#$%&+={}\[\]]+)+\.[a-z]+$/i.test(options.file))
+                this.#_file = options.file;
+            else
+                console.error("invalid file path");
+        }
 
         if (this.#_file === "")
             return;
