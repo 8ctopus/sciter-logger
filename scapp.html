@@ -59,7 +59,12 @@ document.on("ready", function(event, element) {
 
         // attach logger to console
         logger.attach();
+    }
+    catch (e) {
+        console.error(`${e.message} ${e.stack}`);
+    }
 
+    try {
         console.debug("logger attach - OK");
 
         // capture unhandled exceptions
@@ -122,11 +127,11 @@ import {logger} from "src/logger.js";
 import {test} from "js/test.js";
 
 // logger not attached to console yet as it happens in document ready
-console.log(`logger attached to console - ${logger.isAttached()}`);
+console.log(`main logger attached to console - ${logger.isAttached()}`);
 
 document.on("click", "button#module", function() {
     // logger attached because document ready is complete
-    console.log(`logger attached to console - ${logger.isAttached()}`);
+    console.log(`main attached to console - ${logger.isAttached()}`);
 
     test();
 });

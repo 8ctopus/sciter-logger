@@ -5,12 +5,12 @@
 
 import {logger} from "src/logger.js";
 
-console.log(`logger attached to console - ${logger.isAttached()}`);
+console.log(`iframe logger attached to console - ${logger.isAttached()}`);
 
 // get console from iframe parent
 logger.setConsole();
 
-console.log(`logger attached to console - ${logger.isAttached()}`);
+console.log(`iframe logger attached to console - ${logger.isAttached()}`);
 
 console.log("logging from iframe");
 
