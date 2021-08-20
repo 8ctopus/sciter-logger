@@ -120,7 +120,7 @@ export class logger
         });
 
         this.#_attached = true;
-        console.debug("Logger started and attached to console");
+        console.debug("logger started and attached to console");
     }
 
     /**
@@ -159,6 +159,11 @@ export class logger
      */
     static plaintext(element)
     {
+        if (typeof element !== "object" || !element.constructor || element.constructor.name !== "Element" || element.tag !== "plaintext") {
+            console.error(`element not plaintext`);
+            return;
+        }
+
         this.#_plaintext = element;
     }
 
