@@ -9,10 +9,10 @@ This work was made possible thanks to [https://2ality.com/2015/10/intercepting-m
 ## demo
 
 - git clone the repository
-- run `install.bat` to download the latest sciter binaries and the sciter package manager
-- install packages `php spm.phar install`
-- run `scapp.bat`
-- to refresh the app after changes to the html/css click `F5`
+- on Mac only `chmod +x install.sh scapp.sh`
+- run `install.bat` on Windows or `./install.sh` on Mac to download the latest sciter binaries and the sciter package manager
+- install packages `php bin/spm.phar install`
+- run `scapp.bat` or `./scapp.sh`
 
 ## install
 
