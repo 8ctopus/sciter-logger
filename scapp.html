@@ -61,7 +61,7 @@ document.on("ready", function(event, element) {
         logger.attach();
     }
     catch (e) {
-        console.error(`${e.message} ${e.stack}`);
+        console.error(e);
     }
 
     try {
@@ -84,23 +84,28 @@ document.on("ready", function(event, element) {
         console.error("error");
         console.exception("exception");
 
-        // log object
-        console.log({
+        // test log json object
+        let a = {
             a: 1,
             b: {
                 alpha: "test",
                 beta: "yet another test"
             },
             c: 3,
-        });
+        };
 
-        test();
+        console.debug(a);
+
+        // test log array
+        a = [4, 3, 2, 1];
+
+        console.debug(a);
 
         // test handled exception
         throw new Error("main handled exception");
     }
     catch (e) {
-        console.exception(`${e.message} ${e.stack}`);
+        console.exception(e);
     }
 
     // test unhandled exception

@@ -238,6 +238,26 @@ export class logger
     }
 
     /**
+     * Copy object making all properties visible
+     * @param object object
+     * @return object
+     */
+    static #copyObject(object)
+    {
+        let copy = {};
+
+        // get all keys (enumerable or not)
+        const keys = Object.getOwnPropertyNames(object);
+
+        // copy all keys (making them enumerable)
+        keys.forEach((key) => {
+            copy[key] = object[key];
+        });
+
+        return copy;
+    }
+
+    /**
      * Format message
      * @param string level
      * @param string|object message
@@ -245,8 +265,15 @@ export class logger
      */
     static #format(level, message)
     {
-        if (typeof message === "object")
-            message = JSON.stringify(message, null, 3);
+        if (typeof message === "object") {
+            if (Array.isArray(message))
+                message = JSON.stringify(message, null, 3);
+            else {
+                // make all object properties visible
+                const copy = this.#copyObject(message);
+                message = JSON.stringify(copy, null, 3);
+            }
+        }
 
         switch (level) {
             case "debug":
