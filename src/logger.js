@@ -269,9 +269,11 @@ export class logger
             if (Array.isArray(message))
                 message = JSON.stringify(message, null, 3);
             else {
+                const name = message.constructor.name ?? '';
+
                 // make all object properties visible
                 const copy = this.#copyObject(message);
-                message = JSON.stringify(copy, null, 3);
+                message = name + " " + JSON.stringify(copy, null, 3);
             }
         }
 
