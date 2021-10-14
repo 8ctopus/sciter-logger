@@ -49,7 +49,7 @@ console.note("test note");
 console.line();
 ```
 
-Objects are converted to string
+### objects can be logged
 
 ```js
 console.debug({
@@ -78,7 +78,7 @@ Output can be colored if you include the stylesheet
 
 ### subscribe to logger
 
-````js
+```js
 logger.subscribe(function(level, message) {
 
 });
