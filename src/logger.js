@@ -271,9 +271,17 @@ export class logger
             else {
                 const name = message.constructor.name ?? '';
 
-                // make all object properties visible
-                const copy = this.#copyObject(message);
-                message = name + " " + JSON.stringify(copy, null, 3);
+                switch (name) {
+                    case "Map":
+                        message = name + " " + JSON.stringify(Object.fromEntries(message), null, 3);
+                        break;
+
+                    default:
+                        // make all object properties visible
+                        const copy = this.#copyObject(message);
+                        message = name + " " + JSON.stringify(copy, null, 3);
+                        break;
+                }
             }
         }
 

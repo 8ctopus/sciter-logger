@@ -101,6 +101,15 @@ document.on("ready", function(event, element) {
 
         console.debug(a);
 
+        // test log map
+        a = new Map([
+            [1, 'one'],
+            [2, 'two'],
+            [3, 'three'],
+        ]);
+
+        console.debug(a);
+
         // test handled exception
         throw new Error("main handled exception");
     }
