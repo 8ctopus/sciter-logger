@@ -172,6 +172,12 @@ export class logger
             return;
         }
 
+        // clean plaintext hack (plaintext always has a text element created)
+        const clean = element.$("> text");
+
+        if (clean)
+            clean.remove();
+
         this.#plaintext = element;
     }
 
