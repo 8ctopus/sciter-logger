@@ -5,17 +5,16 @@
 
 import {logger} from "src/logger.js";
 
-console.log(`iframe logger attached to console - ${logger.isAttached()}`);
+// wait for frame to finish loading
+document.on("complete", function() {
+    // get console from parent window
+    logger.setConsole();
 
-// get console from iframe parent
-logger.setConsole();
+    console.log("logging from iframe");
 
-console.log(`iframe logger attached to console - ${logger.isAttached()}`);
-
-console.log("logging from iframe");
-
-// capture unhandled exceptions
-logger.capture();
+    // capture unhandled exceptions
+    logger.capture();
+});
 
 document.on("click", "button", function() {
     console.log("iframe button clicked");
