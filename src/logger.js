@@ -294,6 +294,10 @@ export class logger
                                 message += name + " " + JSON.stringify(Object.fromEntries(item), null, 3);
                                 break;
 
+                            case "Date":
+                                message = name + " " + item;
+                                break;
+
                             default:
                                 // make all object properties visible
                                 const copy = this.#copyObject(item);
