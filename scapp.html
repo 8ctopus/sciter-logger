@@ -24,12 +24,8 @@ import {logger} from "src/logger.js";
 import * as utils from "vendor/8ctopus/sciter-utils/src/utils.js";
 import {test} from "js/test.js";
 
-document.on("ready", function(event, element) {
+document.ready = function(...args) {
     try {
-        // do not handle iframe ready
-        if (element.parentElement)
-            return;
-
         // add support for F5 reload
         utils.addReloadWindow();
 
@@ -119,7 +115,7 @@ document.on("ready", function(event, element) {
 
     // test unhandled exception
     throw new Error("main unhandled exception");
-});
+}
 
 document.on("click", "button#window", function() {
     console.log("create new window...");
