@@ -90,7 +90,7 @@ export class logger
                             let message;
 
                             if (methodName !== "line")
-                                message = loggerThis.#format(methodName, args[0]);
+                                message = loggerThis.#format(methodName, ...args);
                             else
                                 message = "-----------------------------------------------------------------";
 
@@ -266,28 +266,48 @@ export class logger
     /**
      * Format message
      * @param string level
-     * @param string|object message
+     * @param array messages
      * @return string
      */
-    static #format(level, message)
+    static #format(level, ...messages)
     {
-        if (typeof message === "object") {
-            if (Array.isArray(message))
-                message = JSON.stringify(message, null, 3);
-            else {
-                const name = message.constructor.name ?? '';
+        if (!Array.isArray(messages))
+            return "";
 
-                switch (name) {
-                    case "Map":
-                        message = name + " " + JSON.stringify(Object.fromEntries(message), null, 3);
-                        break;
+        let message = "";
 
-                    default:
-                        // make all object properties visible
-                        const copy = this.#copyObject(message);
-                        message = name + " " + JSON.stringify(copy, null, 3);
-                        break;
-                }
+        for (let i = 0; i < messages.length; ++i) {
+            // add space
+            message += i ? ' ' : '';
+
+            const item = messages[i];
+
+            switch (typeof item) {
+                case "object":
+                    if (Array.isArray(item))
+                        message += "Array " + JSON.stringify(item, null, 3);
+                    else {
+                        const name = item.constructor.name ?? '';
+
+                        switch (name) {
+                            case "Map":
+                                message += name + " " + JSON.stringify(Object.fromEntries(item), null, 3);
+                                break;
+
+                            default:
+                                // make all object properties visible
+                                const copy = this.#copyObject(item);
+                                message += name + " " + JSON.stringify(copy, null, 3);
+                                break;
+                        }
+                    }
+
+                    break;
+
+                default:
+                case "string":
+                    message += item;
+                    break;
             }
         }
 

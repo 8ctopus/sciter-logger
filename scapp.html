@@ -78,15 +78,21 @@ document.ready = function(...args) {
         // log sciter version
         console.debug(utils.sciterInfo());
 
-        // test logger
         console.line();
 
+        // test basic logger methods
         console.debug("debug");
         console.log("log");
         console.note("note");
         console.warn("warning");
         console.error("error");
         console.exception("exception");
+
+        console.line();
+
+        // test multiple arguments
+        console.log("a", "b", "c", "d");
+        console.log("string", 1, [1, 3, 4], {"a": 1, "b": 2});
 
         console.line();
 
