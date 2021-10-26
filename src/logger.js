@@ -37,10 +37,12 @@ export class logger
             let file = options.file.replace("$DATE$", new Date().toISOString().split('T')[0]);
 
             // validate file path
-            if (/^[a-z]:((\\|\/)[a-z0-9\s_@\-^!#$%&+={}\[\]]+)+\.[a-z]+$/i.test(file))
+            if (/^[a-z]:((\\|\/)[a-z0-9\s_@\-^!#$%&+={}\[\]]+)+\.[a-z]+$/i.test(file)) {
+                console.log("log to ", file);
                 this.#file = file;
+            }
             else
-                console.error("invalid file path");
+                console.error("invalid file path", file);
         }
 
         if (this.#file === "")
