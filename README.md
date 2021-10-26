@@ -108,7 +108,7 @@ logger.capture();
 
 ## known issues
 
-- no known issues
+- iframe code causes issues, commented for now
 
 ## ideas
 
