@@ -17,7 +17,7 @@ logger.capture();
 document.on("ready", function() {
     try {
         // close window on escape key press
-        utils.closeWindowOnEscape();
+        utils.closeWindowOnEscape(Window.this);
 
         // test handled exception
         throw new Error("window handled exception");
