@@ -291,34 +291,10 @@ export class logger
             }
         }
 
-        switch (level) {
-            case "debug":
-                message = `DEBUG: ${message}`;
-                break;
-
-            case "error":
-                message = `ERROR: ${message}`;
-                break;
-
-            case "exception":
-                message = `EXCEPTION: ${message}`;
-                break;
-
-            case "note":
-                message = `NOTE: ${message}`;
-                break;
-
-            case "warn":
-                message = `WARNING: ${message}`;
-                break;
-
-            default:
-        }
-
         // add time
         const [hh, mm, ss] = new Date().toLocaleTimeString("en-US").split(/:| /)
 
-        return `${hh}:${mm}:${ss} ${message}`;
+        return `${hh}:${mm}:${ss} ${level.toUpperCase()}: ${message}`;
     }
 
     /**
