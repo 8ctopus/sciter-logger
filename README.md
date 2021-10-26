@@ -24,7 +24,7 @@ import {logger} from "src/logger.js";
 
 // initialize logger
 logger.init({
-    file: URL.toPath(__DIR__ + "test.log"),
+    url: __DIR__ + "%DATE%.log",
     clear: true,
 });
 

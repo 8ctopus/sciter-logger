@@ -21,7 +21,6 @@ export class logger
      * Initialize logger
      * @param object (optional) options
      * @return void
-     * @note use URL.toPath() to generate file
      */
     static init(options)
     {
@@ -33,12 +32,14 @@ export class logger
             return;
         }
 
-        if (typeof options.file === "string") {
-            let file = options.file.replace("$DATE$", new Date().toISOString().split('T')[0]);
+        if (typeof options.url === "string") {
+            const url = options.url.replace("%DATE%", new Date().toISOString().split('T')[0]);
+
+            const file = URL.toPath(url);
 
             // validate file path
             if (/^[a-z]:((\\|\/)[a-z0-9\s_@\-^!.#$%&+={}\[\]]+)+\.[a-z]+$/i.test(file)) {
-                console.log("log to ", file);
+                console.log(`log to ${file}`);
                 this.#file = file;
             }
             else
