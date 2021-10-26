@@ -23,7 +23,7 @@ document.on("ready", function() {
         throw new Error("window handled exception");
     }
     catch (e) {
-        console.exception(`${e.message} ${e.stack}`);
+        console.exception(e);
     }
 
     // test unhandled exception

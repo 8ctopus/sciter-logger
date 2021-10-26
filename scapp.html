@@ -1,11 +1,15 @@
 <html
     window-resizable="true"
     window-width="600dip"
-    window-height="400dip"
+    window-height="800dip"
 >
 <head>
 <title>sciter logger demo</title>
 <style>
+
+body {
+    border-spacing: 1em;
+}
 
 iframe {
     height: 15%;
@@ -72,13 +76,16 @@ document.ready = function(...args) {
         console.debug(utils.sciterInfo());
 
         // test logger
+        console.line();
+
         console.debug("debug");
         console.log("log");
-        console.line();
         console.note("note");
         console.warn("warning");
         console.error("error");
         console.exception("exception");
+
+        console.line();
 
         // test log json object
         let a = {
@@ -105,6 +112,8 @@ document.ready = function(...args) {
         ]);
 
         console.debug(a);
+
+        console.line();
 
         // test handled exception
         throw new Error("main handled exception");
