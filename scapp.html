@@ -49,7 +49,7 @@ document.ready = function(...args) {
 
         // initialize logger
         logger.init({
-            file: URL.toPath(__DIR__ + "test.log"),
+            file: URL.toPath(__DIR__ + "test-$DATE$.log"),
             clear: true,
         });
 

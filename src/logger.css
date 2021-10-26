@@ -1,7 +1,10 @@
 plaintext#logger > *,
 #logger > * {
     width: *;
+
     padding-left: 4dip;
+
+    text-overflow: ellipsis;
     white-space: pre;
 }
 

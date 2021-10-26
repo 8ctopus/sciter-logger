@@ -34,11 +34,11 @@ export class logger
         }
 
         if (typeof options.file === "string") {
-            //console.log(options.file);
+            let file = options.file.replace("$DATE$", new Date().toISOString().split('T')[0]);
 
-            // validate path
-            if (/^[a-z]:((\\|\/)[a-z0-9\s_@\-^!#$%&+={}\[\]]+)+\.[a-z]+$/i.test(options.file))
-                this.#file = options.file;
+            // validate file path
+            if (/^[a-z]:((\\|\/)[a-z0-9\s_@\-^!#$%&+={}\[\]]+)+\.[a-z]+$/i.test(file))
+                this.#file = file;
             else
                 console.error("invalid file path");
         }
