@@ -42,8 +42,11 @@ document.ready = function(...args) {
         // center window on screen
         utils.centerWindow(Window.this, "screen");
 
-        // bring window to front
-        utils.windowToFront(Window.this);
+        // bring window to front and set input focus
+        if (Window.this.activate(true))
+            console.log("Activate window - OK");
+        else
+            console.error("Activate window - FAILED");
 
         console.log("logger init...");
 
