@@ -10,14 +10,10 @@ document.on("complete", function() {
     // get console from parent window
     logger.setConsole();
 
-    console.log("logging from iframe");
-
     // capture unhandled exceptions
     logger.capture();
-});
 
-document.on("click", "button", function() {
-    console.log("iframe button clicked");
+    console.log("logging from iframe");
 
     try {
         // test handled exception
@@ -29,6 +25,11 @@ document.on("click", "button", function() {
 
     // test unhandled exception
     throw new Error("iframe unhandled exception");
+});
+
+
+document.on("click", "button", function() {
+    console.log("iframe button clicked");
 });
 
 </script>
