@@ -151,7 +151,8 @@ document.ready = function(...args) {
  */
 function unhandledExceptionHandler(e)
 {
-    console.exception(e);
+    // log exception using exception if it exists, error otherwise
+    typeof console.exception === "function" ? console.exception(e) : console.error(e);
 
     // check if app has passed init point
     if (init)
