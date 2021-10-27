@@ -136,11 +136,16 @@ export class logger
 
     /**
      * Capture unhandled exceptions
+     * @param function (optional) func
      * @return void
      */
-    static capture()
+    static capture(func)
     {
-        debug.setUnhandledExeceptionHandler(this.#attached ? console.exception : console.error);
+        if (typeof func === "function")
+            debug.setUnhandledExeceptionHandler(func);
+        else
+            debug.setUnhandledExeceptionHandler(this.#attached ? console.exception : console.error);
+
     }
 
     /**

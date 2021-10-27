@@ -31,6 +31,8 @@ import {logger} from "src/logger.js";
 import * as utils from "vendor/8ctopus/sciter-utils/src/utils.js";
 import {test} from "js/test.js";
 
+let init = false;
+
 document.ready = function(...args) {
     // add support for F5 reload
     utils.addReloadWindow();
@@ -47,9 +49,9 @@ document.ready = function(...args) {
     else
         console.error("Activate window - FAILED");
 
+    // initialize logger
     console.log("logger init...");
 
-    // initialize logger
     logger.init({
         url: __DIR__ + "%DATE%.log",
         clear: true,
@@ -68,12 +70,16 @@ document.ready = function(...args) {
     console.debug("logger attach - OK");
 
     // capture unhandled exceptions
-    logger.capture();
+    logger.capture(exceptionHandler);
 
+    // log logger debug info
     logger.debug();
 
     // log sciter version
     console.debug(utils.sciterInfo());
+
+    // initialization complete, app will no longer close on exception
+    init = true;
 
     console.line();
 
@@ -136,6 +142,28 @@ document.ready = function(...args) {
 
     // test unhandled exception
     throw new Error("main unhandled exception");
+}
+
+/**
+ * Exception handler
+ * @param  Error|String e
+ * @return void
+ */
+function exceptionHandler(e)
+{
+    console.exception(e);
+
+    // check if app has passed init point
+    if (init)
+        return;
+
+    console.log("Application must close...");
+
+    // flush io queue so the log is written
+    utils.flushIOQueue();
+
+    // close app (can still be stopped in closerequest event)
+    Window.this.close();
 }
 
 document.on("click", "button#window", function() {
