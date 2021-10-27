@@ -32,106 +32,106 @@ import * as utils from "vendor/8ctopus/sciter-utils/src/utils.js";
 import {test} from "js/test.js";
 
 document.ready = function(...args) {
+    // add support for F5 reload
+    utils.addReloadWindow();
+
+    // close window on escape key press
+    utils.closeWindowOnEscape(Window.this);
+
+    // center window on screen
+    utils.centerWindow(Window.this, "screen");
+
+    // bring window to front and set input focus
+    if (Window.this.activate(true))
+        console.log("Activate window - OK");
+    else
+        console.error("Activate window - FAILED");
+
+    console.log("logger init...");
+
+    // initialize logger
+    logger.init({
+        url: __DIR__ + "%DATE%.log",
+        clear: true,
+    });
+
+    console.log("logger init - OK");
+
+    // redirect logger output to plaintext
+    logger.plaintext(document.$("plaintext#logger"));
+
+    console.log("logger attach...");
+
+    // attach logger to console
+    logger.attach();
+
+    console.debug("logger attach - OK");
+
+    // capture unhandled exceptions
+    logger.capture();
+
+    logger.debug();
+
+    // log sciter version
+    console.debug(utils.sciterInfo());
+
+    console.line();
+
+    // test basic logger methods
+    console.debug("debug");
+    console.log("log");
+    console.note("note");
+    console.warn("warning");
+    console.error("error");
+    console.exception("exception");
+
+    console.line();
+
+    // test multiple arguments
+    console.log("a", "b", "c", "d");
+    console.log("string", 1, [1, 3, 4], {"a": 1, "b": 2});
+
+    console.line();
+
+    // test log json object
+    let a = {
+        a: 1,
+        b: {
+            alpha: "test",
+            beta: "yet another test"
+        },
+        c: 3,
+    };
+
+    console.debug(a);
+
+    // test log array
+    a = [4, 3, 2, 1];
+
+    console.debug(a);
+
+    // test log map
+    a = new Map([
+        [1, 'one'],
+        [2, 'two'],
+        [3, 'three'],
+    ]);
+
+    console.debug(a);
+
+    console.line();
+
+    // test date logging
+    a = new Date();
+
+    console.debug(a);
+
     try {
-        // add support for F5 reload
-        utils.addReloadWindow();
-
-        // close window on escape key press
-        utils.closeWindowOnEscape(Window.this);
-
-        // center window on screen
-        utils.centerWindow(Window.this, "screen");
-
-        // bring window to front and set input focus
-        if (Window.this.activate(true))
-            console.log("Activate window - OK");
-        else
-            console.error("Activate window - FAILED");
-
-        console.log("logger init...");
-
-        // initialize logger
-        logger.init({
-            url: __DIR__ + "%DATE%.log",
-            clear: true,
-        });
-
-        console.log("logger init - OK");
-
-        // redirect logger output to plaintext
-        logger.plaintext(document.$("plaintext#logger"));
-
-        console.log("logger attach...");
-
-        // attach logger to console
-        logger.attach();
-
-        console.debug("logger attach - OK");
-
-        // capture unhandled exceptions
-        logger.capture();
-
-        logger.debug();
-
-        // log sciter version
-        console.debug(utils.sciterInfo());
-
-        console.line();
-
-        // test basic logger methods
-        console.debug("debug");
-        console.log("log");
-        console.note("note");
-        console.warn("warning");
-        console.error("error");
-        console.exception("exception");
-
-        console.line();
-
-        // test multiple arguments
-        console.log("a", "b", "c", "d");
-        console.log("string", 1, [1, 3, 4], {"a": 1, "b": 2});
-
-        console.line();
-
-        // test log json object
-        let a = {
-            a: 1,
-            b: {
-                alpha: "test",
-                beta: "yet another test"
-            },
-            c: 3,
-        };
-
-        console.debug(a);
-
-        // test log array
-        a = [4, 3, 2, 1];
-
-        console.debug(a);
-
-        // test log map
-        a = new Map([
-            [1, 'one'],
-            [2, 'two'],
-            [3, 'three'],
-        ]);
-
-        console.debug(a);
-
-        console.line();
-
-        // test date logging
-        a = new Date();
-
-        console.debug(a);
-
         // test handled exception
         throw new Error("main handled exception");
     }
     catch (e) {
-        typeof console.exception ? console.exception(e) : console.error(e);
+        console.exception(e);
     }
 
     // test unhandled exception
