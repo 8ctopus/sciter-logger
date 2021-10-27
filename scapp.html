@@ -70,7 +70,7 @@ document.ready = function(...args) {
     console.debug("logger attach - OK");
 
     // capture unhandled exceptions
-    logger.capture(exceptionHandler);
+    logger.capture(unhandledExceptionHandler);
 
     // log logger debug info
     logger.debug();
@@ -145,11 +145,11 @@ document.ready = function(...args) {
 }
 
 /**
- * Exception handler
+ * Unhandled exception handler
  * @param  Error|String e
  * @return void
  */
-function exceptionHandler(e)
+function unhandledExceptionHandler(e)
 {
     console.exception(e);
 
