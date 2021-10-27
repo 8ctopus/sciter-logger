@@ -65,12 +65,7 @@ document.ready = function(...args) {
 
         // attach logger to console
         logger.attach();
-    }
-    catch (e) {
-        console.error(e);
-    }
 
-    try {
         console.debug("logger attach - OK");
 
         // capture unhandled exceptions
@@ -136,7 +131,7 @@ document.ready = function(...args) {
         throw new Error("main handled exception");
     }
     catch (e) {
-        console.exception(e);
+        typeof console.exception ? console.exception(e) : console.error(e);
     }
 
     // test unhandled exception
