@@ -140,17 +140,7 @@ export class logger
      */
     static capture()
     {
-        debug.setUnhandledExeceptionHandler((err) => {
-            let message = err.toString() + "\r\n" + err.stack;
-
-            // cleanup message
-            message = message.replace("Error: ", "");
-
-            if (console.exception !== undefined)
-                console.exception(message);
-            else
-                console.error(message);
-        });
+        debug.setUnhandledExeceptionHandler(this.#attached ? console.exception : console.error);
     }
 
     /**
