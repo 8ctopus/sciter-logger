@@ -263,7 +263,7 @@ export class logger
             switch (typeof item) {
                 case "object":
                     if (Array.isArray(item))
-                        message += "Array " + JSON.stringify(item, null, 3);
+                        message += "Array " + JSON.stringify(item, this.#stringifyReplacer, 3);
                     else {
                         const name = item.constructor.name ?? '';
 
@@ -279,7 +279,7 @@ export class logger
                             default:
                                 // make all object properties visible
                                 const copy = this.#copyObject(item);
-                                message += name + " " + JSON.stringify(copy, null, 3);
+                                message += name + " " + JSON.stringify(copy, this.#stringifyReplacer, 3);
                                 break;
                         }
                     }
@@ -370,5 +370,16 @@ export class logger
         });
 
         return copy;
+    }
+
+    /**
+     * Json stringify replacer
+     * @param string key
+     * @param ? value
+     * @return ?
+     */
+    static #stringifyReplacer(key, value)
+    {
+        return typeof value === "bigint" ? value.toString() : value
     }
 }
