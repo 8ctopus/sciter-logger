@@ -262,6 +262,9 @@ export class logger
 
             switch (typeof item) {
                 case "object":
+                    if (item === null)
+                        message += "null";
+                    else
                     if (Array.isArray(item))
                         message += "Array " + JSON.stringify(item, this.#stringifyReplacer, 3);
                     else {
