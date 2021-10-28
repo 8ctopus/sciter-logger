@@ -242,26 +242,6 @@ export class logger
     }
 
     /**
-     * Copy object making all properties visible
-     * @param object object
-     * @return object
-     */
-    static #copyObject(object)
-    {
-        let copy = {};
-
-        // get all keys (enumerable or not)
-        const keys = Object.getOwnPropertyNames(object);
-
-        // copy all keys (making them enumerable)
-        keys.forEach((key) => {
-            copy[key] = object[key];
-        });
-
-        return copy;
-    }
-
-    /**
      * Format message
      * @param string level
      * @param array messages
@@ -370,5 +350,25 @@ export class logger
         catch (e) {
             console.error(`clear log - FAILED - ${e.toString()}`);
         }
+    }
+
+    /**
+     * Copy object making all properties visible
+     * @param object object
+     * @return object
+     */
+    static #copyObject(object)
+    {
+        let copy = {};
+
+        // get all keys (enumerable or not)
+        const keys = Object.getOwnPropertyNames(object);
+
+        // copy all keys (making them enumerable)
+        keys.forEach((key) => {
+            copy[key] = object[key];
+        });
+
+        return copy;
     }
 }
