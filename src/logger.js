@@ -279,6 +279,15 @@ export class logger
                                 message = name + " " + item;
                                 break;
 
+                            case "ArrayBuffer":
+                                let view = new Uint8Array(item);
+
+                                message = `${name}[${view.length}]`;
+
+                                for (let i = 0; i < view.length; ++i)
+                                    message += (" " + view[i].toString(16));
+                                break;
+
                             default:
                                 // make all object properties visible
                                 const copy = this.#copyObject(item);

@@ -27,6 +27,7 @@ plaintext#logger {
 </style>
 <script type="module">
 
+import * as sciter from "@sciter";
 import {logger} from "src/logger.js";
 import * as utils from "vendor/8ctopus/sciter-utils/src/utils.js";
 import {test} from "js/test.js";
@@ -134,6 +135,9 @@ document.ready = function() {
     a = new Date();
 
     console.debug(a);
+
+    // test array buffer logging
+    console.debug(sciter.encode("abcde"));
 
     try {
         // test handled exception
