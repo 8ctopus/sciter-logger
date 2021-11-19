@@ -9,10 +9,10 @@ This work was made possible thanks to [https://2ality.com/2015/10/intercepting-m
 ## demo
 
 - git clone the repository
-- on Mac only `chmod +x install.sh start.sh`
-- run `install.bat` on Windows or `./install.sh` on Mac to download the latest sciter binaries and the sciter package manager
+- on Linux/Mac `chmod +x install.sh start.sh`
+- run `install.bat` (Win) or `./install.sh` (Linux/Mac) to download the latest sciter binaries and the sciter package manager
 - install packages `php bin/spm.phar install`
-- run `start.bat` or `./start.sh`
+- run `start.bat` (Win) or `./start.sh` (Linux/Mac)
 
 ## install
 
