@@ -268,7 +268,7 @@ export class logger
                     if (Array.isArray(item))
                         message += "Array " + JSON.stringify(item, this.#stringifyReplacer, 3);
                     else {
-                        const name = item.constructor.name ?? '';
+                        const name = item.constructor ? (item.constructor.name ?? '') : '';
 
                         switch (name) {
                             case "Map":
