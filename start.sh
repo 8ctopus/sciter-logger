@@ -8,7 +8,7 @@ case "${uname}" in
 
     *)
         machine="UNKNOWN:${uname}"
-        echo "Cannot install for ${machine}"
+        echo "Cannot run for ${machine}"
         exit
         ;;
 
@@ -17,7 +17,6 @@ esac
 #echo "Detected OS ${machine}"
 
 case "${machine}" in
-
 "windows")
     start bin/win-x32/inspector.exe
     start bin/win-x32/scapp.exe main.html --debug
@@ -35,5 +34,4 @@ case "${machine}" in
     # open scapp application in debug mode
     bin/macosx/scapp main.html --debug &
     ;;
-
 esac
