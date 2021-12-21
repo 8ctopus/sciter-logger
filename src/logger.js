@@ -146,7 +146,6 @@ export class logger
             debug.setUnhandledExeceptionHandler(func);
         else
             debug.setUnhandledExeceptionHandler(this.#attached ? console.exception : console.error);
-
     }
 
     /**
