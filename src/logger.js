@@ -28,12 +28,12 @@ export class logger
             return;
 
         if (typeof options !== "object") {
-            console.error(`options not an object`);
+            console.error("options not an object");
             return;
         }
 
         if (typeof options.url === "string") {
-            const url = options.url.replace("%DATE%", new Date().toISOString().split('T')[0]);
+            const url = options.url.replace("%DATE%", new Date().toISOString().split("T")[0]);
 
             const file = URL.toPath(url);
 
@@ -80,47 +80,47 @@ export class logger
 
                 return function(...args) {
                     switch (methodName) {
-                        case "log":
-                        case "warn":
-                        case "error":
+                    case "log":
+                    case "warn":
+                    case "error":
 
                         // new methods
-                        case "debug":
-                        case "exception":
-                        case "line":
+                    case "debug":
+                    case "exception":
+                    case "line":
+                    case "note":
+                        // format message
+                        let message;
+
+                        if (methodName !== "line")
+                            message = loggerThis.#format(methodName, ...args);
+                        else
+                            message = "-----------------------------------------------------------------";
+
+                        // write message to file
+                        loggerThis.#write(message);
+
+                        // send message to subscribers
+                        loggerThis.#send(methodName, message);
+
+                        // use closest method in native console
+                        switch (methodName) {
                         case "note":
-                            // format message
-                            let message;
-
-                            if (methodName !== "line")
-                                message = loggerThis.#format(methodName, ...args);
-                            else
-                                message = "-----------------------------------------------------------------";
-
-                            // write message to file
-                            loggerThis.#write(message);
-
-                            // send message to subscribers
-                            loggerThis.#send(methodName, message);
-
-                            // use closest method in native console
-                            switch (methodName) {
-                                case "note":
-                                case "debug":
-                                    originMethod = target["log"];
-                                    break;
-
-                                case "line":
-                                    originMethod = target["log"];
-                                    args[0] = message;
-                                    break;
-
-                                case "exception":
-                                    originMethod = target["error"];
-                                    break;
-                            }
-
+                        case "debug":
+                            originMethod = target["log"];
                             break;
+
+                        case "line":
+                            originMethod = target["log"];
+                            args[0] = message;
+                            break;
+
+                        case "exception":
+                            originMethod = target["error"];
+                            break;
+                        }
+
+                        break;
                     }
 
                     // call original method if it exists
@@ -166,7 +166,7 @@ export class logger
     static plaintext(element)
     {
         if (typeof element !== "object" || !element.constructor || element.constructor.name !== "Element" || element.tag !== "plaintext") {
-            console.error(`element not plaintext`);
+            console.error("element not plaintext");
             return;
         }
 
@@ -256,57 +256,57 @@ export class logger
 
         for (let i = 0; i < messages.length; ++i) {
             // add space
-            message += i ? ' ' : '';
+            message += i ? " " : "";
 
             const item = messages[i];
 
             switch (typeof item) {
-                case "object":
-                    if (item === null)
-                        message += "null";
-                    else
-                    if (Array.isArray(item))
-                        message += "Array " + JSON.stringify(item, this.#stringifyReplacer, 3);
-                    else {
-                        const name = item.constructor ? (item.constructor.name ?? '') : '';
+            case "object":
+                if (item === null)
+                    message += "null";
+                else
+                if (Array.isArray(item))
+                    message += "Array " + JSON.stringify(item, this.#stringifyReplacer, 3);
+                else {
+                    const name = item.constructor ? (item.constructor.name ?? "") : "";
 
-                        switch (name) {
-                            case "Map":
-                                message += name + " " + JSON.stringify(Object.fromEntries(item), null, 3);
-                                break;
+                    switch (name) {
+                    case "Map":
+                        message += name + " " + JSON.stringify(Object.fromEntries(item), null, 3);
+                        break;
 
-                            case "Date":
-                                message = name + " " + item;
-                                break;
+                    case "Date":
+                        message = name + " " + item;
+                        break;
 
-                            case "ArrayBuffer":
-                                let view = new Uint8Array(item);
+                    case "ArrayBuffer":
+                        let view = new Uint8Array(item);
 
-                                message = `${name}[${view.length}]`;
+                        message = `${name}[${view.length}]`;
 
-                                for (let i = 0; i < view.length; ++i)
-                                    message += (" " + view[i].toString(16));
-                                break;
+                        for (let i = 0; i < view.length; ++i)
+                            message += (" " + view[i].toString(16));
+                        break;
 
-                            default:
-                                // make all object properties visible
-                                const copy = this.#copyObject(item);
-                                message += name + " " + JSON.stringify(copy, this.#stringifyReplacer, 3);
-                                break;
-                        }
+                    default:
+                        // make all object properties visible
+                        const copy = this.#copyObject(item);
+                        message += name + " " + JSON.stringify(copy, this.#stringifyReplacer, 3);
+                        break;
                     }
+                }
 
-                    break;
+                break;
 
-                default:
-                case "string":
-                    message += item;
-                    break;
+            default:
+            case "string":
+                message += item;
+                break;
             }
         }
 
         // add time
-        const [hh, mm, ss] = new Date().toLocaleTimeString("en-US").split(/:| /)
+        const [hh, mm, ss] = new Date().toLocaleTimeString("en-US").split(/:| /);
 
         return `${hh}:${mm}:${ss} ${level.toUpperCase()}: ${message}`;
     }
@@ -324,7 +324,7 @@ export class logger
 
             // open file
             // https://nodejs.org/api/fs.html#fs_file_system_flags
-            const handle = await sys.fs.open(this.#file, "a+", 0o666)
+            const handle = await sys.fs.open(this.#file, "a+", 0o666);
 
             // write message to file
             const buffer = encode(message + "\r\n", "utf-8");
@@ -353,7 +353,7 @@ export class logger
     static async #clear()
     {
         try {
-            const handle = await sys.fs.open(this.#file, "w", 0o666)
+            const handle = await sys.fs.open(this.#file, "w", 0o666);
 
             const buffer = encode("", "utf-8");
             await handle.write(buffer);
@@ -392,6 +392,6 @@ export class logger
      */
     static #stringifyReplacer(key, value)
     {
-        return typeof value === "bigint" ? value.toString() : value
+        return typeof value === "bigint" ? value.toString() : value;
     }
 }
