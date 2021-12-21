@@ -107,7 +107,7 @@ document.on("ready", function() {
         a: 1,
         b: {
             alpha: "test",
-            beta: "yet another test"
+            beta: "yet another test",
         },
         c: 3,
     };
@@ -179,8 +179,8 @@ document.on("click", "button#window", function() {
 
     new Window({
         parent: Window.this,
-        url   : __DIR__ + "window.html",
-        state : Window.WINDOW_SHOWN,
+        url: __DIR__ + "window.html",
+        state: Window.WINDOW_SHOWN,
         alignment: 6,
         width: 300,
         height: 200,
