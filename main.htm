@@ -34,7 +34,7 @@ import {test} from "js/test.js";
 
 let init = false;
 
-document.ready = function() {
+document.on("ready", function() {
     // add support for F5 reload
     utils.addReloadWindow();
 
@@ -149,7 +149,8 @@ document.ready = function() {
 
     // test unhandled exception
     throw new Error("main unhandled exception");
-}
+});
+
 
 /**
  * Unhandled exception handler
