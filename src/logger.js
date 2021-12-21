@@ -4,7 +4,7 @@
  */
 
 import * as sys from "@sys";
-import {encode,decode} from "@sciter";
+import {encode} from "@sciter";
 import * as debug from "@debug";
 
 export class logger
