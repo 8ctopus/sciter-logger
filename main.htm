@@ -30,7 +30,6 @@ plaintext#logger {
 import * as sciter from "@sciter";
 import {logger} from "src/logger.js";
 import * as utils from "vendor/8ctopus/sciter-utils/src/utils.js";
-import {test} from "js/test.js";
 
 let init = false;
 
@@ -122,9 +121,9 @@ document.on("ready", function() {
 
     // test log map
     a = new Map([
-        [1, 'one'],
-        [2, 'two'],
-        [3, 'three'],
+        [1, "one"],
+        [2, "two"],
+        [3, "three"],
     ]);
 
     console.debug(a);
