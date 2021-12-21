@@ -17,21 +17,21 @@ esac
 #echo "Detected OS ${machine}"
 
 case "${machine}" in
-"windows")
-    start bin/win-x32/inspector.exe
-    start bin/win-x32/scapp.exe main.html --debug
-    ;;
+    "windows")
+        start bin/win-x32/inspector.exe
+        start bin/win-x32/scapp.exe main.htm --debug
+        ;;
 
-"linux")
-    bin/linux/inspector &
-    bin/linux/scapp main.html --debug &
-    ;;
+    "linux")
+        bin/linux/inspector &
+        bin/linux/scapp main.htm --debug &
+        ;;
 
-"macosx")
-    # open inspector
-    open -a inspector.app
+    "macosx")
+        # open inspector
+        open -a inspector.app
 
-    # open scapp application in debug mode
-    bin/macosx/scapp main.html --debug &
-    ;;
+        # open scapp application in debug mode
+        bin/macosx/scapp main.htm --debug &
+        ;;
 esac
