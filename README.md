@@ -110,6 +110,14 @@ logger.capture();
 
 - iframe code causes issues, commented for now
 
+## code linting
+
+Code linting uses [eslint](https://github.com/eslint/eslint) and requires
+
+- node.js
+- `npm install -g eslint`
+- `eslint src/logger.js` or `eslint --fix src/logger.js`
+
 ## ideas
 
 - open log file only once? would require non-exclusive rights to the file
