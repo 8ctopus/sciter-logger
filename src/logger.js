@@ -88,7 +88,7 @@ export class logger
                         case "debug":
                         case "exception":
                         case "line":
-                        case "note":
+                        case "note": {
                             // format message
                             let message;
 
@@ -121,6 +121,7 @@ export class logger
                             }
 
                             break;
+                        }
                     }
 
                     // call original method if it exists
@@ -279,7 +280,7 @@ export class logger
                                 message = name + " " + item;
                                 break;
 
-                            case "ArrayBuffer":
+                            case "ArrayBuffer": {
                                 let view = new Uint8Array(item);
 
                                 message = `${name}[${view.length}]`;
@@ -287,12 +288,14 @@ export class logger
                                 for (let i = 0; i < view.length; ++i)
                                     message += (" " + view[i].toString(16));
                                 break;
+                            }
 
-                            default:
+                            default: {
                                 // make all object properties visible
                                 const copy = this.#copyObject(item);
                                 message += name + " " + JSON.stringify(copy, this.#stringifyReplacer, 3);
                                 break;
+                            }
                         }
                     }
 
