@@ -280,7 +280,7 @@ export class logger
                                 break;
 
                             case "ArrayBuffer": {
-                                let view = new Uint8Array(item);
+                                const view = new Uint8Array(item);
 
                                 message = `${name}[${view.length}]`;
 
@@ -373,7 +373,7 @@ export class logger
      */
     static #copyObject(object)
     {
-        let copy = {};
+        const copy = {};
 
         // get all keys (enumerable or not)
         const keys = Object.getOwnPropertyNames(object);
