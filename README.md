@@ -115,8 +115,13 @@ logger.capture();
 Code linting uses [eslint](https://github.com/eslint/eslint) and requires
 
 - node.js
-- `npm install -g eslint`
-- `eslint src/logger.js` or `eslint --fix src/logger.js`
+- locally `npm install eslint eslint-plugin-html --save-dev`
+    - find issues `eslint src/*.js main.htm`
+    - fix issues `eslint --fix src/*.js main.htm`
+
+- globally `npm install -g eslint eslint-plugin-html`
+    - find issues `eslint src/*.js main.htm --resolve-plugins-relative-to=$(npm root -g)`
+    - fix issues `eslint --fix src/*.js --resolve-plugins-relative-to=$(npm root -g)`
 
 ## ideas
 
