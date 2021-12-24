@@ -7,23 +7,21 @@ import * as sys from "@sys";
 import {encode} from "@sciter";
 import * as debug from "@debug";
 
-export class logger
-{
+export class logger {
     static #file = "";
     static #original;
 
     static #attached = false;
-    static #callback = null;
+    static #callback = undefined;
 
-    static #plaintext = null;
+    static #plaintext = undefined;
 
     /**
      * Initialize logger
-     * @param object (optional) options
-     * @return void
+     * @param {object} options - (optional)
+     * @returns {void}
      */
-    static init(options)
-    {
+    static init(options) {
         if (typeof options === "undefined")
             return;
 
@@ -38,7 +36,7 @@ export class logger
             const file = URL.toPath(url);
 
             // validate file path
-            if (/^[a-z]:((\\|\/)[a-z0-9\s_@\-^!.#$%&+={}\[\]]+)+\.[a-z]+$/i.test(file)) {
+            if (/^[a-z]:(([/\\])[\s\w!#$%&+.=@[\]^{}\-]+)+\.[a-z]+$/i.test(file)) {
                 console.log(`log to ${file}`);
                 this.#file = file;
             }
@@ -59,10 +57,9 @@ export class logger
 
     /**
      * Attach to console
-     * @return void
+     * @returns {void}
      */
-    static attach()
-    {
+    static attach() {
         // check if already attached to console
         if (this.#attached)
             return;
@@ -78,7 +75,7 @@ export class logger
                 // get original method
                 let originMethod = target[methodName];
 
-                return function(...args) {
+                return function(...arguments_) {
                     switch (methodName) {
                         case "log":
                         case "warn":
@@ -90,12 +87,8 @@ export class logger
                         case "line":
                         case "note": {
                             // format message
-                            let message;
-
-                            if (methodName !== "line")
-                                message = loggerThis.#format(methodName, ...args);
-                            else
-                                message = "-----------------------------------------------------------------";
+                            const message = methodName !== "line" ? loggerThis.#format(methodName, ...arguments_) :
+                                "-----------------------------------------------------------------";
 
                             // write message to file
                             loggerThis.#write(message);
@@ -112,7 +105,7 @@ export class logger
 
                                 case "line":
                                     originMethod = target["log"];
-                                    args[0] = message;
+                                    arguments_[0] = message;
                                     break;
 
                                 case "exception":
@@ -126,9 +119,9 @@ export class logger
 
                     // call original method if it exists
                     if (originMethod)
-                        return originMethod.apply(this, args);
+                        return originMethod.apply(this, arguments_);
                 };
-            }
+            },
         });
 
         this.#attached = true;
@@ -137,35 +130,33 @@ export class logger
 
     /**
      * Capture unhandled exceptions
-     * @param function (optional) func
-     * @return void
+     * @param {Function} function_ - (optional) func
+     * @returns {void}
      */
-    static capture(func)
-    {
-        if (typeof func === "function")
-            debug.setUnhandledExeceptionHandler(func);
+    static capture(function_) {
+        if (typeof function_ === "function")
+            debug.setUnhandledExeceptionHandler(function_);
         else
             debug.setUnhandledExeceptionHandler(this.#attached ? console.exception : console.error);
     }
 
     /**
      * Subscribe to new messages
-     * @param function callback
-     * @return void
+     * @param {Function} callback
+     * @returns {void}
      */
-    static subscribe(callback)
-    {
+    static subscribe(callback) {
         this.#callback = callback;
     }
 
     /**
      * Add plaintext
-     * @param plaintext element
-     * @return void
+     * @param {Element} element
+     * @returns {void}
      */
-    static plaintext(element)
-    {
-        if (typeof element !== "object" || !element.constructor || element.constructor.name !== "Element" || element.tag !== "plaintext") {
+    static plaintext(element) {
+        if (typeof element !== "object" || !element.constructor ||
+            element.constructor.name !== "Element" || element.tag !== "plaintext") {
             console.error("element not plaintext");
             return;
         }
@@ -181,10 +172,8 @@ export class logger
 
     /**
      * Debug info
-     * @return void
      */
-    static debug()
-    {
+    static debug() {
         console.debug(`original console.log - ${this.#original}`);
 
         // check if sciter is running with --debug flag
@@ -196,10 +185,8 @@ export class logger
 
     /**
      * Set window or iframe console to parent console
-     * @return void
      */
-    static setConsole()
-    {
+    static setConsole() {
         // check for parent window
         if (Window.this && Window.this.parent)
             console = Window.this.parent.document.globalThis.console;
@@ -213,21 +200,18 @@ export class logger
 
     /**
      * Check if logger is attached to console
-     * @return bool
+     * @returns {boolean}
      */
-    static isAttached()
-    {
+    static isAttached() {
         return typeof console.exception === "function";
     }
 
     /**
      * Send message to subscribers
-     * @param string level
-     * @param string message
-     * @return void
+     * @param {string} level
+     * @param {string} message
      */
-    static #send(level, message)
-    {
+    static #send(level, message) {
         if (this.#callback)
             // call callback
             this.#callback(level, message);
@@ -243,22 +227,20 @@ export class logger
 
     /**
      * Format message
-     * @param string level
-     * @param array messages
-     * @return string
+     * @param {string} level
+     * @param {...any} messages
+     * @returns {string}
      */
-    static #format(level, ...messages)
-    {
+    static #format(level, ...messages) {
         if (!Array.isArray(messages))
             return "";
 
         let message = "";
 
-        for (let i = 0; i < messages.length; ++i) {
+        for (const [index, item] of messages.entries()) {
             // add space
-            message += i ? " " : "";
+            message += index ? " " : "";
 
-            const item = messages[i];
 
             switch (typeof item) {
                 case "object":
@@ -272,7 +254,7 @@ export class logger
 
                         switch (name) {
                             case "Map":
-                                message += name + " " + JSON.stringify(Object.fromEntries(item), null, 3);
+                                message += name + " " + JSON.stringify(Object.fromEntries(item), undefined, 3);
                                 break;
 
                             case "Date":
@@ -284,8 +266,8 @@ export class logger
 
                                 message = `${name}[${view.length}]`;
 
-                                for (let i = 0; i < view.length; ++i)
-                                    message += (" " + view[i].toString(16));
+                                for (let index = 0; index < view.length; ++index)
+                                    message += (" " + view[index].toString(16));
                                 break;
                             }
 
@@ -315,11 +297,10 @@ export class logger
 
     /**
      * Write message to file
-     * @param string message
-     * @return Promise
+     * @param {string} message
+     * @returns {Promise}
      */
-    static async #write(message)
-    {
+    static async #write(message) {
         try {
             if (this.#file === "")
                 return;
@@ -333,27 +314,24 @@ export class logger
             await handle.write(buffer);
             await handle.close();
         }
-        catch (e) {
+        catch (error) {
             // send message to original console method
-            console.error(`write to file - FAILED - ${e.toString()}`);
+            console.error(`write to file - FAILED - ${error.toString()}`);
         }
     }
 
     /**
      * Add new line
-     * @return void
      */
-    static #newLine()
-    {
+    static #newLine() {
         this.#write("");
     }
 
     /**
      * Clear log
-     * @return Promise
+     * @returns {Promise}
      */
-    static async #clear()
-    {
+    static async #clear() {
         try {
             const handle = await sys.fs.open(this.#file, "w", 0o666);
 
@@ -361,39 +339,36 @@ export class logger
             await handle.write(buffer);
             await handle.close();
         }
-        catch (e) {
-            console.error(`clear log - FAILED - ${e.toString()}`);
+        catch (error) {
+            console.error(`clear log - FAILED - ${error.toString()}`);
         }
     }
 
     /**
      * Copy object making all properties visible
-     * @param object object
-     * @return object
+     * @param {object} object
+     * @returns {object}
      */
-    static #copyObject(object)
-    {
+    static #copyObject(object) {
         const copy = {};
 
         // get all keys (enumerable or not)
         const keys = Object.getOwnPropertyNames(object);
 
         // copy all keys (making them enumerable)
-        keys.forEach((key) => {
+        for (const key of keys)
             copy[key] = object[key];
-        });
 
         return copy;
     }
 
     /**
      * Json stringify replacer
-     * @param string key
-     * @param ? value
-     * @return ?
+     * @param {string} key
+     * @param {?} value
+     * @returns {?}
      */
-    static #stringifyReplacer(key, value)
-    {
+    static #stringifyReplacer(key, value) {
         return typeof value === "bigint" ? value.toString() : value;
     }
 }

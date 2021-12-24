@@ -142,8 +142,8 @@ document.on("ready", function() {
         // test handled exception
         throw new Error("main handled exception");
     }
-    catch (e) {
-        console.exception(e);
+    catch (exception) {
+        console.exception(exception);
     }
 
     // test unhandled exception
@@ -153,13 +153,11 @@ document.on("ready", function() {
 
 /**
  * Unhandled exception handler
- * @param  Error|String e
- * @return void
+ * @param {Error|string} exception
  */
-function unhandledExceptionHandler(e)
-{
+function unhandledExceptionHandler(exception) {
     // log exception using exception if it exists, error otherwise
-    typeof console.exception === "function" ? console.exception(e) : console.error(e);
+    typeof console.exception === "function" ? console.exception(exception) : console.error(exception);
 
     // check if app has passed init point
     if (init)
