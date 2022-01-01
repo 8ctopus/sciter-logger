@@ -89,7 +89,7 @@ logger.subscribe(function(level, message) {
 - as each `Window` has its own console, you will need to use the `console` object from the parent window:
 
 ```js
-import {logger} from "src/logger.js";
+import logger from "src/logger.js";
 
 // get console from parent
 logger.setConsole();
@@ -98,7 +98,7 @@ logger.setConsole();
 - unhandled exceptions must also be captured in every new `Window`.
 
 ```js
-import {logger} from "src/logger.js";
+import logger from "src/logger.js";
 
 // capture unhandled exceptions
 logger.capture();

@@ -7,7 +7,7 @@ import * as sys from "@sys";
 import {encode} from "@sciter";
 import * as debug from "@debug";
 
-export class logger {
+export default class logger {
     static #file = "";
     static #original;
 
