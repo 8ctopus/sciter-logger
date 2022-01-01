@@ -112,16 +112,17 @@ logger.capture();
 
 ## code linting
 
-Code linting uses [eslint](https://github.com/eslint/eslint) and requires
+Javascript code linting uses [eslint](https://github.com/eslint/eslint). HTML code linting uses [HTMLLint](https://htmlhint.com/). Both require Node.js
 
-- node.js
-- locally `npm install eslint eslint-plugin-html eslint-config-google --save-dev`
-    - find issues `eslint src/*.js main.htm`
-    - fix issues `eslint --fix src/*.js main.htm`
+```sh
+npm install
 
-- globally `npm install -g eslint eslint-plugin-html eslint-config-google`
-    - find issues `eslint src/*.js main.htm --resolve-plugins-relative-to=$(npm root -g)`
-    - fix issues `eslint --fix src/*.js --resolve-plugins-relative-to=$(npm root -g)`
+# lint javascript
+npx eslint main.htm src/*.js
+
+# lint html
+npx htmlhint main.htm
+```
 
 ## ideas
 
