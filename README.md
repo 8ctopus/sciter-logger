@@ -20,7 +20,7 @@ This work was made possible thanks to [https://2ality.com/2015/10/intercepting-m
 - in `<script type="module">`
 
 ```js
-import {logger} from "src/logger.js";
+import logger from "src/logger.js";
 
 // initialize logger
 logger.init({
