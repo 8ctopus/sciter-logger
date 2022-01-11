@@ -1,5 +1,5 @@
-# sciter 4.4.8.22
-sciterSDK="edaeb0146f0c910e0ff75bbb0fc85dfa108c4034"
+# sciter 4.4.8.22-bis
+sciterSDK="6cedc57ff09404ad17e1899abc06f843a4677b69"
 
 # get os name
 uname="$(uname -s)"
