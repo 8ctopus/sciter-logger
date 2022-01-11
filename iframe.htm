@@ -3,15 +3,15 @@
 <title>Test</title>
 <script type="module">
 
-import logger from "src/logger.js";
+import Logger from "src/logger.js";
 
 // wait for frame to finish loading
 document.on("complete", function() {
     // get console from parent window
-    logger.setConsole();
+    Logger.setConsole();
 
     // capture unhandled exceptions
-    logger.capture();
+    Logger.capture();
 
     console.log("logging from iframe");
 

@@ -1,6 +1,6 @@
 {
   "name": "sciter-logger",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "This is a [sciter.js](https://sciter.com/) logger that listens to the console output and redirects it to a file and/or any html element.",
   "main": "src/logger.js",
   "dependencies": {

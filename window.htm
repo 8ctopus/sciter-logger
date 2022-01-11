@@ -3,16 +3,16 @@
 <title>Test</title>
 <script type="module">
 
-import logger from "src/logger.js";
-import * as utils from "vendor/8ctopus/sciter-utils/src/utils.js";
+import Logger from "src/logger.js";
+import * as utils from "node_modules/sciter-utils/src/utils.js";
 
 // get console from parent window
-logger.setConsole();
+Logger.setConsole();
 
 console.log("logging from new window");
 
 // capture unhandled exceptions
-logger.capture();
+Logger.capture();
 
 document.on("ready", function() {
     try {

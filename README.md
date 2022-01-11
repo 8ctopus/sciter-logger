@@ -16,23 +16,23 @@ This work was made possible thanks to [https://2ality.com/2015/10/intercepting-m
 
 ## install
 
-- use npm (`npm install git://github.com/8ctopus/sciter-logger#1.0.1`), alternatively add the `src` dir to your project
+- use npm (`npm install git://github.com/8ctopus/sciter-logger#1.1.0`), alternatively add the `src` dir to your project
 - then in `<script type="module">`
 
 ```js
-import logger from "src/logger.js";
+import Logger from "src/logger.js";
 
 // initialize logger
-logger.init({
+Logger.init({
     url: __DIR__ + "%DATE%.log",
     clear: true,
 });
 
 // attach logger to console
-logger.attach();
+Logger.attach();
 
 // capture unhandled exceptions
-logger.capture();
+Logger.capture();
 
 // log
 console.log("new logger test");
@@ -67,7 +67,7 @@ console.debug({
 Console output can be redirected to a plaintext element
 
 ```js
-logger.plaintext(document.$("plaintext"));
+Logger.plaintext(document.$("plaintext"));
 ```
 
 Output can be colored if you include the stylesheet
@@ -79,7 +79,7 @@ Output can be colored if you include the stylesheet
 ### subscribe to logger
 
 ```js
-logger.subscribe(function(level, message) {
+Logger.subscribe(function(level, message) {
 
 });
 ```
@@ -89,19 +89,19 @@ logger.subscribe(function(level, message) {
 - as each `Window` has its own console, you will need to use the `console` object from the parent window:
 
 ```js
-import logger from "src/logger.js";
+import Logger from "src/logger.js";
 
 // get console from parent
-logger.setConsole();
+Logger.setConsole();
 ```
 
 - unhandled exceptions must also be captured in every new `Window`.
 
 ```js
-import logger from "src/logger.js";
+import Logger from "src/logger.js";
 
 // capture unhandled exceptions
-logger.capture();
+Logger.capture();
 ```
 
 `iframe`s behave just like `Window`s in that aspect.
