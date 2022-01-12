@@ -29,19 +29,19 @@ plaintext#logger {
 
 import * as sciter from "@sciter";
 import Logger from "src/logger.js";
-import * as utils from "node_modules/sciter-utils/src/utils.js";
+import * as Utils from "node_modules/sciter-utils/src/utils.js";
 
 let init = false;
 
 document.on("ready", function() {
     // add support for F5 reload
-    utils.addReloadWindow();
+    Utils.addReloadWindow();
 
     // close window on escape key press
-    utils.closeWindowOnEscape(Window.this);
+    Utils.closeWindowOnEscape(Window.this);
 
     // center window on screen
-    utils.centerWindow(Window.this, "screen");
+    Utils.centerWindow(Window.this, "screen");
 
     // bring window to front and set input focus
     if (Window.this.activate(true))
@@ -76,7 +76,7 @@ document.on("ready", function() {
     Logger.debug();
 
     // log sciter version
-    console.debug(utils.sciterInfo());
+    console.debug(Utils.sciterInfo());
 
     // initialization complete, app will no longer close on exception
     init = true;
@@ -166,7 +166,7 @@ function unhandledExceptionHandler(exception) {
     console.log("Application must close...");
 
     // flush io queue so the log is written
-    utils.flushIOQueue();
+    Utils.flushIOQueue();
 
     // close app (can still be stopped in closerequest event)
     Window.this.close();
