@@ -4,7 +4,7 @@
   "description": "This is a [sciter.js](https://sciter.com/) logger that listens to the console output and redirects it to a file and/or any html element.",
   "main": "src/logger.js",
   "dependencies": {
-    "package.json": "^2.0.1"
+    "sciter-utils": "github:8ctopus/sciter-utils#0.7.0"
   },
   "devDependencies": {
     "eslint": "^8.0",
@@ -12,8 +12,7 @@
     "eslint-plugin-html": "^6.2.0",
     "eslint-plugin-jsdoc": "^37.4.0",
     "eslint-plugin-unicorn": "^39.0.0",
-    "htmlhint": "^1.0.0",
-    "sciter-utils": "github:8ctopus/sciter-utils#0.6.11"
+    "htmlhint": "^1.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
