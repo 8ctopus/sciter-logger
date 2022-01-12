@@ -17,7 +17,7 @@ This work was made possible thanks to [https://2ality.com/2015/10/intercepting-m
 ## install
 
 - use npm (`npm install git://github.com/8ctopus/sciter-logger#1.1.0`), alternatively add the `src` dir to your project
-- then in `<script type="module">`
+- add to `<script type="module">`
 
 ```js
 import Logger from "src/logger.js";
