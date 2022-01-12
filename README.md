@@ -20,7 +20,7 @@ This work was made possible thanks to [https://2ality.com/2015/10/intercepting-m
 - add to `<script type="module">`
 
 ```js
-import Logger from "src/logger.js";
+import Logger from "node_modules/sciter-logger/src/logger.js";
 
 // initialize logger
 Logger.init({
@@ -73,7 +73,7 @@ Logger.plaintext(document.$("plaintext"));
 Output can be colored if you include the stylesheet
 
 ```html
-<style src="src/logger.css" />
+<style src="node_modules/sciter-logger/src/logger.css" />
 ```
 
 ### subscribe to logger
