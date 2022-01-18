@@ -137,7 +137,9 @@ export default class Logger {
         if (typeof function_ === "function")
             debug.setUnhandledExeceptionHandler(function_);
         else
-            debug.setUnhandledExeceptionHandler(this.#attached ? console.exception : console.error);
+            debug.setUnhandledExeceptionHandler((exception) => {
+                this.#attached ? console.exception("unhandled exception", exception) : console.error("unhandled exception", exception);
+            });
     }
 
     /**
