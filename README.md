@@ -4,7 +4,7 @@ This is a [sciter.js](https://sciter.com/) logger that listens to the console ou
 
 This work was made possible thanks to [https://2ality.com/2015/10/intercepting-method-calls.html](https://2ality.com/2015/10/intercepting-method-calls.html).
 
-![sciter logger screenshot](screenshot.png)
+![sciter logger screenshot](https://github.com/8ctopus/sciter-fontawesome/raw/master/screenshot.png)
 
 ## demo
 
@@ -28,6 +28,7 @@ This work was made possible thanks to [https://2ality.com/2015/10/intercepting-m
 ### copy source
 
 - add the `src` dir to your project
+
 
 - add to `<script type="module">`
 
@@ -121,20 +122,6 @@ Logger.capture();
 ## known issues
 
 - iframe code causes issues, commented for now
-
-## code linting
-
-Javascript code linting uses [eslint](https://github.com/eslint/eslint). HTML code linting uses [HTMLLint](https://htmlhint.com/). Both require Node.js
-
-```sh
-npm install
-
-# lint javascript
-npx eslint main.htm src/*.js
-
-# lint html
-npx htmlhint main.htm
-```
 
 ## ideas
 
