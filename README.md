@@ -4,7 +4,7 @@ This is a [sciter.js](https://sciter.com/) logger that listens to the console ou
 
 This work was made possible thanks to [https://2ality.com/2015/10/intercepting-method-calls.html](https://2ality.com/2015/10/intercepting-method-calls.html).
 
-![sciter logger screenshot](https://github.com/8ctopus/sciter-fontawesome/raw/master/screenshot.png)
+![sciter logger screenshot](https://github.com/8ctopus/sciter-logger/raw/master/screenshot.png)
 
 ## demo
 
