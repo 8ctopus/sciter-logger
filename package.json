@@ -2,6 +2,10 @@
   "name": "sciter-logger",
   "version": "1.1.1",
   "description": "This is a [sciter.js](https://sciter.com/) logger that listens to the console output and redirects it to a file and/or any html element.",
+  "keywords": [
+    "sciter.js",
+    "logger"
+  ],
   "scripts": {
     "install-sdk": "node ./node_modules/sciter-sandbox/scripts/install.mjs cleanup",
     "scapp": "node ./node_modules/sciter-sandbox/scripts/start.mjs scapp",
