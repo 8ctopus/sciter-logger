@@ -71,7 +71,7 @@ export default class Logger {
 
         // create proxy around console object
         console = new Proxy(console, {
-            get(target, methodName, receiver) {
+            get(target, methodName, _receiver) {
                 // get original method
                 let originMethod = target[methodName];
 
@@ -87,8 +87,8 @@ export default class Logger {
                         case "line":
                         case "note": {
                             // format message
-                            const message = methodName !== "line" ? loggerThis.#format(methodName, ...arguments_) :
-                                "-----------------------------------------------------------------";
+                            const message = methodName !== "line" ? loggerThis.#format(methodName, ...arguments_)
+                                : "-----------------------------------------------------------------";
 
                             // write message to file
                             loggerThis.#write(message);
@@ -100,21 +100,25 @@ export default class Logger {
                             switch (methodName) {
                                 case "note":
                                 case "debug":
-                                    originMethod = target["log"];
+                                    originMethod = target.log;
                                     break;
 
                                 case "line":
-                                    originMethod = target["log"];
+                                    originMethod = target.log;
                                     arguments_[0] = message;
                                     break;
 
                                 case "exception":
-                                    originMethod = target["error"];
+                                    originMethod = target.error;
                                     break;
+
+                                default:
                             }
 
                             break;
                         }
+
+                        default:
                     }
 
                     // call original method if it exists
@@ -136,10 +140,11 @@ export default class Logger {
     static capture(function_) {
         if (typeof function_ === "function")
             debug.setUnhandledExeceptionHandler(function_);
-        else
-            debug.setUnhandledExeceptionHandler((exception) => {
-                this.#attached ? console.exception("unhandled exception", exception) : console.error("unhandled exception", exception);
+        else {
+            debug.setUnhandledExeceptionHandler(exception => {
+                this.#attached ? console.exception("Unhandled exception", exception) : console.error("Unhandled exception", exception);
             });
+        }
     }
 
     /**
@@ -157,8 +162,8 @@ export default class Logger {
      * @returns {void}
      */
     static plaintext(element) {
-        if (typeof element !== "object" || !element.constructor ||
-            element.constructor.name !== "Element" || element.tag !== "plaintext") {
+        if (typeof element !== "object" || !element.constructor
+            || element.constructor.name !== "Element" || element.tag !== "plaintext") {
             console.error("element not plaintext");
             return;
         }
@@ -243,7 +248,6 @@ export default class Logger {
             // add space
             message += index ? " " : "";
 
-
             switch (typeof item) {
                 case "object":
                     if (item === null)
@@ -284,8 +288,8 @@ export default class Logger {
 
                     break;
 
-                default:
                 case "string":
+                default:
                     message += item;
                     break;
             }

@@ -19,14 +19,13 @@ document.on("complete", function() {
         // test handled exception
         throw new Error("iframe handled exception");
     }
-    catch (e) {
-        console.exception(e);
+    catch (error) {
+        console.exception(error);
     }
 
     // test unhandled exception
     throw new Error("iframe unhandled exception");
 });
-
 
 document.on("click", "button", function() {
     console.log("iframe button clicked");

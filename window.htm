@@ -22,8 +22,8 @@ document.on("ready", function() {
         // test handled exception
         throw new Error("window handled exception");
     }
-    catch (e) {
-        console.exception(e);
+    catch (error) {
+        console.exception(error);
     }
 
     // test unhandled exception

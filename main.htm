@@ -95,7 +95,7 @@ document.on("ready", function() {
 
     // test multiple arguments
     console.log("a", "b", "c", "d");
-    console.log("string", 1, [1, 3, 4], {"a": 1, "b": 2});
+    console.log("string", 1, [1, 3, 4], {a: 1, b: 2});
 
     console.line();
 
@@ -142,14 +142,13 @@ document.on("ready", function() {
         // test handled exception
         throw new Error("main handled exception");
     }
-    catch (exception) {
-        console.exception(exception);
+    catch (error) {
+        console.exception(error);
     }
 
     // test unhandled exception
     throw new Error("main unhandled exception");
 });
-
 
 /**
  * Unhandled exception handler
