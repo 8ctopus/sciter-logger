@@ -119,10 +119,6 @@ Logger.capture();
 
 `iframe`s behave just like `Window`s in that aspect.
 
-## known issues
-
-- iframe code causes issues, commented for now
-
 ## ideas
 
 - open log file only once? would require non-exclusive rights to the file
