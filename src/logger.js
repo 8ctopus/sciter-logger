@@ -39,8 +39,7 @@ export default class Logger {
             if (/^[a-z]:(([/\\])[\s\w!#$%&+.=@[\]^{}\-]+)+\.[a-z]+$/i.test(file)) {
                 console.log(`log to ${file}`);
                 this.#file = file;
-            }
-            else
+            } else
                 console.error("invalid file path", file);
         }
 
@@ -319,8 +318,7 @@ export default class Logger {
             const buffer = encode(message + "\r\n", "utf-8");
             await handle.write(buffer);
             await handle.close();
-        }
-        catch (error) {
+        } catch (error) {
             // send message to original console method
             console.error(`write to file - FAILED - ${error.toString()}`);
         }
@@ -344,8 +342,7 @@ export default class Logger {
             const buffer = encode("", "utf-8");
             await handle.write(buffer);
             await handle.close();
-        }
-        catch (error) {
+        } catch (error) {
             console.error(`clear log - FAILED - ${error.toString()}`);
         }
     }
