@@ -25,6 +25,6 @@
   "homepage": "https://github.com/8ctopus/sciter-logger#readme",
   "devDependencies": {
     "sciter-sandbox": "^1.1.12",
-    "sciter-utils": "^0.8.0"
+    "sciter-utils": "^1.0.4"
   }
 }
