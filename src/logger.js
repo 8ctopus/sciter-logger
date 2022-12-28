@@ -278,6 +278,16 @@ export default class Logger {
                                 break;
                             }
 
+                            case "Error": {
+                                // cleanup callstack
+                                item.stack = item.stack.replace(/[ ]{2,}at /g, '');
+                                item.stack = item.stack.replace(/\n$/, '');
+                                item.stack = item.stack.split(/\n/g);
+                                const copy = this.#copyObject(item);
+                                message += name + " " + JSON.stringify(copy, this.#stringifyReplacer, 3);
+                                break;
+                            }
+
                             default: {
                                 // make all object properties visible
                                 const copy = this.#copyObject(item);

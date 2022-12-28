@@ -145,9 +145,21 @@ document.on("ready", function() {
         console.exception(error);
     }
 
+    try {
+        // test function exception
+        testException();
+    } catch (error) {
+        console.exception(error);
+    }
+
     // test unhandled exception
     throw new Error("main unhandled exception");
 });
+
+function testException()
+{
+    throw new Error('function exception');
+}
 
 /**
  * Unhandled exception handler
