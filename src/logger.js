@@ -193,13 +193,15 @@ export default class Logger {
      * Set window or iframe console to parent console
      */
     static setConsole() {
-        // check for parent window
-        if (Window.this && Window.this.parent)
-            console = Window.this.parent.document.globalThis.console;
-        else
         // check for iframe
-        if (document.parentElement && document.parentElement.ownerDocument)
+        if (document.parentElement && document.parentElement.ownerDocument) {
             console = document.parentElement.ownerDocument.globalThis.console;
+        }
+        else
+        // check for parent window
+        if (Window.this && Window.this.parent) {
+            console = Window.this.parent.document.globalThis.console;
+        }
         else
             console.error("setConsole - FAILED");
     }
