@@ -10,10 +10,8 @@ import * as debug from "@debug";
 export default class Logger {
     static #file = "";
     static #original;
-
     static #attached = false;
     static #callback = undefined;
-
     static #plaintext = undefined;
 
     /**
@@ -22,7 +20,7 @@ export default class Logger {
      * @returns {void}
      */
     static init(options) {
-        if (typeof options === "undefined")
+        if (options === undefined)
             return;
 
         if (typeof options !== "object") {
@@ -194,16 +192,16 @@ export default class Logger {
      */
     static setConsole() {
         // check for iframe
-        if (document.parentElement && document.parentElement.ownerDocument) {
+        if (document.parentElement && document.parentElement.ownerDocument)
             console = document.parentElement.ownerDocument.globalThis.console;
-        }
+
         else
         // check for parent window
-        if (Window.this && Window.this.parent) {
-            console = Window.this.parent.document.globalThis.console;
-        }
-        else
-            console.error("setConsole - FAILED");
+            if (Window.this && Window.this.parent)
+                console = Window.this.parent.document.globalThis.console;
+
+            else
+                console.error("setConsole - FAILED");
     }
 
     /**
@@ -254,48 +252,48 @@ export default class Logger {
                     if (item === null)
                         message += "null";
                     else
-                    if (Array.isArray(item))
-                        message += "Array " + JSON.stringify(item, this.#stringifyReplacer, 3);
-                    else {
-                        const name = item.constructor ? (item.constructor.name ?? "") : "";
+                        if (Array.isArray(item))
+                            message += "Array " + JSON.stringify(item, this.#stringifyReplacer, 3);
+                        else {
+                            const name = item.constructor ? (item.constructor.name ?? "") : "";
 
-                        switch (name) {
-                            case "Map":
-                                message += name + " " + JSON.stringify(Object.fromEntries(item), undefined, 3);
-                                break;
+                            switch (name) {
+                                case "Map":
+                                    message += name + " " + JSON.stringify(Object.fromEntries(item), undefined, 3);
+                                    break;
 
-                            case "Date":
-                                message = name + " " + item;
-                                break;
+                                case "Date":
+                                    message = name + " " + item;
+                                    break;
 
-                            case "ArrayBuffer": {
-                                const view = new Uint8Array(item);
+                                case "ArrayBuffer": {
+                                    const view = new Uint8Array(item);
 
-                                message = `${name}[${view.length}]`;
+                                    message = `${name}[${view.length}]`;
 
-                                for (let index = 0; index < view.length; ++index)
-                                    message += (" " + view[index].toString(16));
-                                break;
-                            }
+                                    for (let index = 0; index < view.length; ++index)
+                                        message += (" " + view[index].toString(16));
+                                    break;
+                                }
 
-                            case "Error": {
-                                // cleanup callstack
-                                item.stack = item.stack.replace(/[ ]{2,}at /g, '');
-                                item.stack = item.stack.replace(/\n$/, '');
-                                item.stack = item.stack.split(/\n/g);
-                                const copy = this.#copyObject(item);
-                                message += name + " " + JSON.stringify(copy, this.#stringifyReplacer, 3);
-                                break;
-                            }
+                                case "Error": {
+                                    // cleanup callstack
+                                    item.stack = item.stack.replace(/ {2,}at /g, "");
+                                    item.stack = item.stack.replace(/\n$/, "");
+                                    item.stack = item.stack.split(/\n/g);
+                                    const copy = this.#copyObject(item);
+                                    message += name + " " + JSON.stringify(copy, this.#stringifyReplacer, 3);
+                                    break;
+                                }
 
-                            default: {
-                                // make all object properties visible
-                                const copy = this.#copyObject(item);
-                                message += name + " " + JSON.stringify(copy, this.#stringifyReplacer, 3);
-                                break;
+                                default: {
+                                    // make all object properties visible
+                                    const copy = this.#copyObject(item);
+                                    message += name + " " + JSON.stringify(copy, this.#stringifyReplacer, 3);
+                                    break;
+                                }
                             }
                         }
-                    }
 
                     break;
 
