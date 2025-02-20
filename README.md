@@ -5,9 +5,9 @@
 
 This is a [sciter.js](https://sciter.com/) logger that listens to the console output and redirects it to a file and/or any html element.
 
-This work was made possible thanks to [https://2ality.com/2015/10/intercepting-method-calls.html](https://2ality.com/2015/10/intercepting-method-calls.html).
-
 ![sciter logger screenshot](https://github.com/8ctopus/sciter-logger/raw/master/screenshot.png)
+
+This work was made possible thanks to [https://2ality.com/2015/10/intercepting-method-calls.html](https://2ality.com/2015/10/intercepting-method-calls.html).
 
 ## demo
 
@@ -24,6 +24,8 @@ This work was made possible thanks to [https://2ality.com/2015/10/intercepting-m
 
 ## add to your project
 
+You can either add it to your project using npm or by copying the src directory.
+
 ### using npm
 
 - install package `npm install sciter-logger`
@@ -32,11 +34,13 @@ This work was made possible thanks to [https://2ality.com/2015/10/intercepting-m
 
 - add the `src` dir to your project
 
-
-- add to `<script type="module">`
+### add to `<script type="module">`
 
 ```js
+// npm
 import Logger from "node_modules/sciter-logger/src/logger.js";
+// or source copy
+import Logger from "src/logger.js";
 
 // initialize logger
 Logger.init({
