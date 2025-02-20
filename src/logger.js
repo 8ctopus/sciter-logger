@@ -1,14 +1,8 @@
-/**
- * logger
- * @author 8ctopus <hello@octopuslabs.io>
- */
-
 import * as sys from "@sys";
 import {encode} from "@sciter";
 import * as debug from "@debug";
 
 export default class Logger {
-    // instance of custom console so it can be accessed by other documents
     static console;
     static #file = "";
     static #original;
@@ -127,8 +121,8 @@ export default class Logger {
             },
         });
 
-        // instance of custom console so it can be accessed by other documents (every document has it's own console)
-        this.console   = console;
+        // save custom console so it can be accessed by other documents (every document has it's own console)
+        this.console = console;
         this.#attached = true;
         console.debug("logger started and attached to console");
     }
