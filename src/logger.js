@@ -195,11 +195,10 @@ export default class Logger {
 
         else
         // check for parent window
-            if (Window.this && Window.this.parent)
-                console = Window.this.parent.document.globalThis.console;
-
-            else
-                console.error("setConsole - FAILED");
+        if (Window.this && Window.this.parent)
+            console = Window.this.parent.document.globalThis.console;
+        else
+            console.error("setConsole - FAILED");
     }
 
     /**
