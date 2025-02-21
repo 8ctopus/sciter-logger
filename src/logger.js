@@ -374,11 +374,11 @@ export default class Logger {
 
     /**
      * Json stringify replacer
-     * @param {string} key
+     * @param {string} _key
      * @param {?} value
      * @returns {?}
      */
-    static #stringifyReplacer(key, value) {
+    static #stringifyReplacer(_key, value) {
         return typeof value === "bigint" ? value.toString() : value;
     }
 }
