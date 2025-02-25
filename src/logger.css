@@ -4,7 +4,7 @@ plaintext#logger > *,
 
     padding-left: 4dip;
 
-    text-overflow: ellipsis;
+    //text-overflow: ellipsis;
     white-space: pre;
 }
 
